@@ -107,11 +107,11 @@
 			};
 			buildConfigurationList = 9B7662EC2C6DAD0200A41D3D /* Build configuration list for PBXProject "InterviewRecorder" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
 			);
 			mainGroup = 9B7662E82C6DAD0200A41D3D;
 			productRefGroup = 9B7662F22C6DAD0200A41D3D /* Products */;
