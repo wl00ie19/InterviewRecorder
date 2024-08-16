@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */; };
 		9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */; };
 		9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7662F62C6DAD0200A41D3D /* ContentView.swift */; };
 		9B7662F92C6DAD0300A41D3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B7662F82C6DAD0300A41D3D /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuestionView.swift; sourceTree = "<group>"; };
 		9B7662F12C6DAD0200A41D3D /* InterviewRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InterviewRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterviewRecorderApp.swift; sourceTree = "<group>"; };
 		9B7662F62C6DAD0200A41D3D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */,
 				9B7662F62C6DAD0200A41D3D /* ContentView.swift */,
+				9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */,
 				9B7663062C6DEE9700A41D3D /* Models */,
 				9B7662F82C6DAD0300A41D3D /* Assets.xcassets */,
 				9B7662FA2C6DAD0300A41D3D /* Preview Content */,
@@ -153,6 +156,7 @@
 			files = (
 				9B7663032C6DED9100A41D3D /* AudioRecordManager.swift in Sources */,
 				9B7663052C6DEE8F00A41D3D /* Question.swift in Sources */,
+				9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */,
 				9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */,
 				9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */,
 			);
