@@ -9,9 +9,9 @@ import Foundation
 import SwiftData
 
 @Model
-class Question {
+class Question: Identifiable {
     /// 질문 ID
-    let id: UUID
+    let id: String
     
     /// 질문 내용
     let content: String
@@ -33,7 +33,7 @@ class Question {
         answerURLString != nil
     }
     
-    init(id: UUID, content: String, questionDate: Date) {
+    init(id: String, content: String, questionDate: Date) {
         self.id = id
         self.content = content
         self.questionDate = questionDate
