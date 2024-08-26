@@ -127,19 +127,23 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
-    func startPlay(recordingURL: URL) {
+    func startPlay(fileURLString: String) {
         errorMessage = nil
         
         // 재생 시작
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
-            if let audioPlayer {
-                audioPlayer.prepareToPlay()
-                audioPlayer.delegate = self
-                audioPlayer.play()
-                status = .play
+        if let recordingURL = URL(string: fileURLString) {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+                if let audioPlayer {
+                    audioPlayer.prepareToPlay()
+                    audioPlayer.delegate = self
+                    audioPlayer.play()
+                    status = .play
+                }
+            } catch {
+                errorMessage = .playingFail
             }
-        } catch {
+        } else {
             errorMessage = .playingFail
         }
     }
@@ -160,9 +164,9 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         status = .stop
     }
     
-    func deleteRecord(offsets: IndexSet) {
+    func deleteRecord(fileURLString: String) {
         errorMessage = nil
-               
+        
         // 삭제 전 재생 및 녹음 정지
         if status != .stop {
             if status == .record {
@@ -171,19 +175,17 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer?.stop()
         }
         
-        // 해당 index의 녹음 파일 지우기
-        for index in offsets {
-            let recordURL = recordedFiles[index]
-            
+        // 해당 URL의 녹음 파일 지우기, 녹음 URL 목록 삭제
+        if let recordURL = URL(string: fileURLString) {
             do {
                 try FileManager.default.removeItem(at: recordURL)
+                recordedFiles.removeAll{ $0 == recordURL }
             } catch {
                 errorMessage = .deleteFail
             }
+        } else {
+            errorMessage = .playingFail
         }
-        
-        // 녹음 URL 목록 삭제
-        recordedFiles.remove(atOffsets: offsets)
     }
     
     private func dateToString(date: Date) -> String {
