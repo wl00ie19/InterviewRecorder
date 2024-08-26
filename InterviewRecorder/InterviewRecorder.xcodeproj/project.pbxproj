@@ -14,6 +14,7 @@
 		9B7662FC2C6DAD0300A41D3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B7662FB2C6DAD0300A41D3D /* Preview Assets.xcassets */; };
 		9B7663032C6DED9100A41D3D /* AudioRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7663022C6DED9100A41D3D /* AudioRecordManager.swift */; };
 		9B7663052C6DEE8F00A41D3D /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7663042C6DEE8F00A41D3D /* Question.swift */; };
+		9BDF04812C74914000448EF0 /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDF04802C74914000448EF0 /* ColorButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		9B7662FB2C6DAD0300A41D3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9B7663022C6DED9100A41D3D /* AudioRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordManager.swift; sourceTree = "<group>"; };
 		9B7663042C6DEE8F00A41D3D /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		9BDF04802C74914000448EF0 /* ColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */,
 				9B7662F62C6DAD0200A41D3D /* ContentView.swift */,
 				9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */,
+				9BDF04802C74914000448EF0 /* ColorButton.swift */,
 				9B7663062C6DEE9700A41D3D /* Models */,
 				9B7662F82C6DAD0300A41D3D /* Assets.xcassets */,
 				9B7662FA2C6DAD0300A41D3D /* Preview Content */,
@@ -157,6 +160,7 @@
 				9B7663032C6DED9100A41D3D /* AudioRecordManager.swift in Sources */,
 				9B7663052C6DEE8F00A41D3D /* Question.swift in Sources */,
 				9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */,
+				9BDF04812C74914000448EF0 /* ColorButton.swift in Sources */,
 				9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */,
 				9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */,
 			);
