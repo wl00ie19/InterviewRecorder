@@ -21,21 +21,21 @@ struct ContentView: View {
                         
                         Text("EnvironmentObject는 무엇이고 어떤 경우 사용할까요?")
                             .font(.title)
-                            .padding(.horizontal, 5)
                         
                         ColorButton(title: "답변하기", buttonColor: .blue, textColor: Color(uiColor: .systemBackground)) {
                             
                         }
                     }
-                    .padding(.vertical, 10)
+                    .padding(10)
                     .background {
                         RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                            .strokeBorder(Color(uiColor: .systemGray4), lineWidth: 2)
+                            .strokeBorder(Color(uiColor: .systemGray3), lineWidth: 2)
                     }
                     
                     ColorButton(title: "질문 추가하기", buttonColor: Color(uiColor: .systemGray5)) {
                         isShowingNewQuestion.toggle()
                     }
+                    .padding(.horizontal, 10)
                 }
                 .padding(10)
             }
