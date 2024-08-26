@@ -32,7 +32,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         recordTime % 60
     }
     
-    func startRecord() {
+    func startRecord(questionID: String) {
         let session = AVAudioSession.sharedInstance()
         errorMessage = nil
         
@@ -43,7 +43,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             errorMessage = .startFail
         }
         
-        let fileName = dateToString(date: Date())
+        let fileName = questionID + dateToString(date: Date())
         
         guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             errorMessage = .startFail
