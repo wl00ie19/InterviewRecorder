@@ -15,30 +15,34 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack(spacing: 20) {
-                    VStack {
+                    VStack(spacing: 30) {
                         Text("답변하지 않은 질문")
+                            .font(.headline)
                         
-                        Text("질문 내용")
-                            .font(.title2)
+                        Text("EnvironmentObject는 무엇이고 어떤 경우 사용할까요?")
+                            .font(.title)
+                            .padding(.horizontal, 5)
                         
-                        Button("답변하기") {
+                        ColorButton(title: "답변하기", buttonColor: .blue, textColor: Color(uiColor: .systemBackground)) {
                             
                         }
                     }
+                    .padding(.vertical, 10)
+                    .background {
+                        RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                            .strokeBorder(Color(uiColor: .systemGray4), lineWidth: 2)
+                    }
                     
-                    Button("질문 추가하기") {
+                    ColorButton(title: "질문 추가하기", buttonColor: Color(uiColor: .systemGray5)) {
                         isShowingNewQuestion.toggle()
                     }
                 }
+                .padding(10)
             }
             .navigationTitle("전체 답변 목록")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        
-                    } label: {
-                        Label("앱 정보", systemImage: "info.circle")
-                    }
+                    EditButton()
                 }
             }
             .navigationDestination(isPresented: $isShowingNewQuestion) {
