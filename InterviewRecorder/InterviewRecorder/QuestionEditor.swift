@@ -21,8 +21,6 @@ struct QuestionEditor: View {
                 RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
                     .strokeBorder(focused ? Color(uiColor: .systemGray3) : Color(uiColor: .systemGray5), lineWidth: 2)
             }
-            .padding(.horizontal, 10)
             .animation(.easeIn(duration: 0.15), value: focused)
-        
     }
 }
