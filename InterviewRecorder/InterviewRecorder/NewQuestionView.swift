@@ -14,9 +14,9 @@ struct NewQuestionView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 20) {
+            VStack(alignment: .leading, spacing: 20) {
                 Text("새로운 질문을 입력하세요.")
-                    .font(.title2.bold())
+                    .font(.title2)
                 
                 QuestionEditor(content: $content)
                     .focused($focused)
@@ -25,7 +25,6 @@ struct NewQuestionView: View {
                 ColorButton(title: "추가", buttonColor: .blue, textColor: Color(uiColor: .systemBackground)) {
                     
                 }
-                .frame(height: 70)
                 
                 Spacer()
             }
@@ -40,6 +39,7 @@ struct NewQuestionView: View {
             .navigationTitle("질문 추가")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .padding(.horizontal, 10)
     }
 }
 
