@@ -47,9 +47,8 @@ struct ColorButton: View {
         Button {
             action()
         } label: {
-            ZStack{
-                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                    .foregroundStyle(buttonColor)
+            HStack {
+                Spacer()
                 
                 if let icon {
                     Label(title, systemImage: icon)
@@ -60,9 +59,14 @@ struct ColorButton: View {
                         .foregroundStyle(textColor)
                         .padding(15)
                 }
+                
+                Spacer()
+            }
+            .background {
+                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                    .foregroundStyle(buttonColor)
             }
         }
         .buttonStyle(CustomButton())
-        .padding(.horizontal, 10)
     }
 }
