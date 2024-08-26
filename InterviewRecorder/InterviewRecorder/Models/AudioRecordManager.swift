@@ -16,22 +16,27 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var errorMessage: ErrorType?
     @Published var audioLevel: CGFloat = 0.0
     
+    /// 녹음 파일 목록
     var recordedFiles = [URL]()
     
     var timer: Timer?
     
     var startTime: TimeInterval = 0
     
+    /// 녹음 진행 시간
     @Published var recordTime: Int = 0
     
+    /// 녹음 진행 시간(분)
     var minute: Int {
         recordTime / 60
     }
     
+    /// 녹음 진행 시간(초)
     var second: Int {
         recordTime % 60
     }
     
+    /// 녹음 시작 - 질문 ID 필요
     func startRecord(questionID: String) {
         let session = AVAudioSession.sharedInstance()
         errorMessage = nil
@@ -87,6 +92,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    /// 오디오 음량 레벨 가져오기
     func getAudiolevels() {
         audioRecorder?.updateMeters()
         
@@ -97,6 +103,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    /// 녹음 정지
     func stopRecord() {
         audioRecorder?.stop()
         timer?.invalidate()
@@ -110,6 +117,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    /// 녹음 목록 새로고침
     func fetchData() {
         errorMessage = nil
         
@@ -127,6 +135,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    /// 해당 URL의 녹음 파일 재생 시작
     func startPlay(fileURLString: String) {
         errorMessage = nil
         
@@ -148,22 +157,26 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    /// 재생 일시정지
     func pausePlay() {
         audioPlayer?.pause()
         status = .pause
     }
     
+    /// 재생 계속하기
     func resumePlay() {
         audioPlayer?.play()
         status = .play
     }
     
+    /// 재생 중단
     func stopPlay() {
         audioPlayer?.stop()
         errorMessage = nil
         status = .stop
     }
     
+    /// 해당 URL의 녹음 파일 삭제
     func deleteRecord(fileURLString: String) {
         errorMessage = nil
         
