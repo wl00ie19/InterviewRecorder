@@ -19,9 +19,9 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     /// 녹음 파일 목록
     var recordedFiles = [URL]()
     
-    var timer: Timer?
+    private var timer: Timer?
     
-    var startTime: TimeInterval = 0
+    private var startTime: TimeInterval = 0
     
     /// 녹음 진행 시간
     @Published var recordTime: Int = 0
