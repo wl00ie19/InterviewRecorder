@@ -43,12 +43,14 @@ struct QuestionCell: View {
                     HStack {
                         Text(title)
                             .font(.title2)
+                        
                         Spacer()
                     }
                     .padding(15)
                 }
                 .foregroundStyle(.foreground)
                 .buttonStyle(CustomCell())
+                .disabled(isEditing)
                 
                 if isEditing {
                     DeleteButton {
