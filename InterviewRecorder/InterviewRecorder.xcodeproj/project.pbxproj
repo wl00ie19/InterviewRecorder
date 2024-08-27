@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2260882C7D62CC009C51B6 /* QuestionCell.swift */; };
+		9B22608C2C7D7062009C51B6 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B22608B2C7D7062009C51B6 /* DeleteButton.swift */; };
 		9B7358572C7C7A6300126144 /* QuestionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7358562C7C7A6200126144 /* QuestionEditor.swift */; };
 		9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */; };
 		9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		9B2260882C7D62CC009C51B6 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
+		9B22608B2C7D7062009C51B6 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
 		9B7358562C7C7A6200126144 /* QuestionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionEditor.swift; sourceTree = "<group>"; };
 		9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuestionView.swift; sourceTree = "<group>"; };
 		9B7662F12C6DAD0200A41D3D /* InterviewRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InterviewRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +46,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B22608D2C7D71ED009C51B6 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				9BDF04802C74914000448EF0 /* ColorButton.swift */,
+				9B22608B2C7D7062009C51B6 /* DeleteButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		9B7662E82C6DAD0200A41D3D = {
 			isa = PBXGroup;
 			children = (
@@ -65,10 +76,10 @@
 			children = (
 				9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */,
 				9B7662F62C6DAD0200A41D3D /* ContentView.swift */,
+				9B2260882C7D62CC009C51B6 /* QuestionCell.swift */,
 				9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */,
 				9B7358562C7C7A6200126144 /* QuestionEditor.swift */,
-				9BDF04802C74914000448EF0 /* ColorButton.swift */,
-				9B2260882C7D62CC009C51B6 /* QuestionCell.swift */,
+				9B22608D2C7D71ED009C51B6 /* Buttons */,
 				9B7663062C6DEE9700A41D3D /* Models */,
 				9B7662F82C6DAD0300A41D3D /* Assets.xcassets */,
 				9B7662FA2C6DAD0300A41D3D /* Preview Content */,
@@ -168,6 +179,7 @@
 				9B7663052C6DEE8F00A41D3D /* Question.swift in Sources */,
 				9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */,
 				9BDF04812C74914000448EF0 /* ColorButton.swift in Sources */,
+				9B22608C2C7D7062009C51B6 /* DeleteButton.swift in Sources */,
 				9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */,
 				9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */,
 				9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */,
