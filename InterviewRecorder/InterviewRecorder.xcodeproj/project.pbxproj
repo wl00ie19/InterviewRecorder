@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2260882C7D62CC009C51B6 /* QuestionCell.swift */; };
 		9B7358572C7C7A6300126144 /* QuestionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7358562C7C7A6200126144 /* QuestionEditor.swift */; };
 		9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */; };
 		9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B2260882C7D62CC009C51B6 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
 		9B7358562C7C7A6200126144 /* QuestionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionEditor.swift; sourceTree = "<group>"; };
 		9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuestionView.swift; sourceTree = "<group>"; };
 		9B7662F12C6DAD0200A41D3D /* InterviewRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InterviewRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,7 @@
 				9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */,
 				9B7358562C7C7A6200126144 /* QuestionEditor.swift */,
 				9BDF04802C74914000448EF0 /* ColorButton.swift */,
+				9B2260882C7D62CC009C51B6 /* QuestionCell.swift */,
 				9B7663062C6DEE9700A41D3D /* Models */,
 				9B7662F82C6DAD0300A41D3D /* Assets.xcassets */,
 				9B7662FA2C6DAD0300A41D3D /* Preview Content */,
@@ -165,6 +168,7 @@
 				9B7663052C6DEE8F00A41D3D /* Question.swift in Sources */,
 				9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */,
 				9BDF04812C74914000448EF0 /* ColorButton.swift in Sources */,
+				9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */,
 				9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */,
 				9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */,
 			);
