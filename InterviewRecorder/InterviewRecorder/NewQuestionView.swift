@@ -6,9 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NewQuestionView: View {
+    @Environment(\.modelContext) var modelContext
+    
+    @Query(sort: \Question.questionDate) var questions: [Question]
+    
     @FocusState private var focused: Bool
+    
+    @Binding var isShowingNewQuestion: Bool
     
     @State private var content: String = ""
     
@@ -23,7 +30,8 @@ struct NewQuestionView: View {
                     .frame(height: geometry.size.height * 0.4)
                 
                 ColorButton(title: "추가", buttonColor: .blue, textColor: Color(uiColor: .systemBackground)) {
-                    
+                    isShowingNewQuestion = false
+                    modelContext.insert(Question(id: UUID().uuidString, content: content, questionDate: Date()))
                 }
                 
                 Spacer()
@@ -44,5 +52,5 @@ struct NewQuestionView: View {
 }
 
 #Preview {
-    NewQuestionView()
+    NewQuestionView(isShowingNewQuestion: .constant(true))
 }
