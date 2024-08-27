@@ -6,10 +6,30 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @Environment(\.modelContext) var modelContext
+    
+    @Query(sort: \Question.questionDate) var questions: [Question]
+    
     @State private var isShowingRecordAnswer: Bool = false
+    
     @State private var isShowingNewQuestion: Bool = false
+    
+    @State private var isEditing: Bool = false
+    
+    @State private var isShowingDeleteAlert: Bool = false
+    
+    @State private var selectedQuestion: Question?
+    
+    var editButtonText: String {
+        isEditing ? "완료" : "삭제"
+    }
+    
+    var editIconName: String {
+        isEditing ? "checkmark" : "trash"
+    }
     
     var body: some View {
         NavigationStack {
@@ -39,18 +59,46 @@ struct ContentView: View {
                         .padding(.horizontal, 10)
                     }
                     .padding(10)
+                    
+                    ForEach(questions) { question in
+                        QuestionCell(title: question.content, isEditing: $isEditing) {
+                            
+                        } deleteAction: {
+                            selectedQuestion = question
+                            isShowingDeleteAlert.toggle()
+                        }
+                    }
                 }
                 .padding(.vertical, 10)
             }
             .navigationTitle("전체 답변 목록")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    EditButton()
+                    Button {
+                        isEditing.toggle()
+                    } label: {
+                        Label(editButtonText, systemImage: editIconName)
+                    }
                 }
             }
             .navigationDestination(isPresented: $isShowingNewQuestion) {
-                NewQuestionView()
+                NewQuestionView(isShowingNewQuestion: $isShowingNewQuestion)
             }
+            .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
+                Button("취소", role: .cancel) {
+                    isShowingDeleteAlert = false
+                }
+                
+                Button("확인", role: .destructive) {
+                    if let selectedQuestion {
+                        modelContext.delete(selectedQuestion)
+                    }
+                    isShowingDeleteAlert = false
+                }
+            } message: {
+                Text("녹음된 답변도 같이 삭제됩니다.")
+            }
+            
         }
     }
 }
