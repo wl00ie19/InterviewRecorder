@@ -21,7 +21,7 @@ struct NewQuestionView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("새로운 질문을 입력하세요.")
                     .font(.title2)
                 
@@ -46,8 +46,8 @@ struct NewQuestionView: View {
             }
             .navigationTitle("질문 추가")
             .navigationBarTitleDisplayMode(.inline)
+            .padding(10)
         }
-        .padding(.horizontal, 10)
     }
 }
 
