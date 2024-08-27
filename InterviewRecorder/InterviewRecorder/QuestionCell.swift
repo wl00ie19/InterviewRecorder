@@ -17,8 +17,25 @@ struct QuestionCell: View {
     // 삭제 동작
     var deleteAction: () -> ()
     
+    struct CustomCell: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .overlay {
+                    GeometryReader { geometry in
+                        ZStack {
+                            if configuration.isPressed {
+                                Rectangle()
+                                    .foregroundStyle(.foreground.opacity(0.1))
+                            }
+                        }
+                        .frame(height: geometry.size.height)
+                    }
+                }
+        }
+    }
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             ZStack(alignment: .trailing) {
                 Button {
                     action()
@@ -26,27 +43,22 @@ struct QuestionCell: View {
                     HStack {
                         Text(title)
                             .font(.title2)
-                        
                         Spacer()
                     }
-                    .padding(10)
+                    .padding(15)
                 }
+                .foregroundStyle(.foreground)
+                .buttonStyle(CustomCell())
                 
                 if isEditing {
-                    Button {
+                    DeleteButton {
                         deleteAction()
-                    } label: {
-                        Label("삭제", systemImage: "trash")
-                            .labelStyle(.iconOnly)
-                            .frame(height: 15)
-                            .padding(5)
-                            .background {
-                                RoundedRectangle(cornerSize: CGSize(width: 5, height: 5))
-                                    .foregroundStyle(.red)
-                            }
                     }
+                    .padding(.horizontal, 15)
                 }
             }
+            
+            Divider()
         }
     }
 }
