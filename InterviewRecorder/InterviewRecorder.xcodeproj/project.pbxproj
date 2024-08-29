@@ -12,6 +12,7 @@
 		9B4378D42C80126000908BFC /* AnswerRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D32C80126000908BFC /* AnswerRecordingView.swift */; };
 		9B4378D62C801E8400908BFC /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D52C801E8400908BFC /* PlayButton.swift */; };
 		9B4378D82C80221300908BFC /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D72C80221300908BFC /* CustomButtonStyle.swift */; };
+		9B5807A92C806C9E005EA8C2 /* RecordVolumeGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */; };
 		9B7358572C7C7A6300126144 /* QuestionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7358562C7C7A6200126144 /* QuestionEditor.swift */; };
 		9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */; };
 		9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */; };
@@ -29,6 +30,7 @@
 		9B4378D32C80126000908BFC /* AnswerRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRecordingView.swift; sourceTree = "<group>"; };
 		9B4378D52C801E8400908BFC /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		9B4378D72C80221300908BFC /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
+		9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVolumeGauge.swift; sourceTree = "<group>"; };
 		9B7358562C7C7A6200126144 /* QuestionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionEditor.swift; sourceTree = "<group>"; };
 		9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuestionView.swift; sourceTree = "<group>"; };
 		9B7662F12C6DAD0200A41D3D /* InterviewRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InterviewRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 				9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */,
 				9B7358562C7C7A6200126144 /* QuestionEditor.swift */,
 				9B4378D32C80126000908BFC /* AnswerRecordingView.swift */,
+				9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */,
 				9B22608D2C7D71ED009C51B6 /* Buttons */,
 				9B7663062C6DEE9700A41D3D /* Models */,
 				9B7662F82C6DAD0300A41D3D /* Assets.xcassets */,
@@ -195,6 +198,7 @@
 				9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */,
 				9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */,
 				9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */,
+				9B5807A92C806C9E005EA8C2 /* RecordVolumeGauge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
