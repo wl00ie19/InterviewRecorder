@@ -12,6 +12,8 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     var audioRecorder: AVAudioRecorder? = nil
     var audioPlayer: AVAudioPlayer? = nil
     
+    private let dateConverter = DateConverter.shared
+    
     @Published var status: RecordStatus = .stop
     @Published var errorMessage: ErrorType?
     @Published var audioLevel: CGFloat = 0.0
@@ -48,7 +50,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             errorMessage = .startFail
         }
         
-        let fileName = questionID + dateToString(date: Date())
+        let fileName = questionID + dateConverter.toFileNameString(date: Date())
         
         guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             errorMessage = .startFail
@@ -199,14 +201,6 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         } else {
             errorMessage = .playingFail
         }
-    }
-    
-    private func dateToString(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
-        
-        return dateFormatter.string(from: date)
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
