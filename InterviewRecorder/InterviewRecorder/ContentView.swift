@@ -36,21 +36,23 @@ struct ContentView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     VStack(spacing: 10) {
-                        VStack(spacing: 30) {
-                            Text("답변하지 않은 질문")
-                                .font(.headline)
-                            
-                            Text("EnvironmentObject는 무엇이고 어떤 경우 사용할까요?")
-                                .font(.title)
-                            
-                            ColorButton(title: "답변하기", buttonColor: .blue, textColor: Color(uiColor: .systemBackground), isDisabled: isEditing) {
+                        if !questions.isEmpty {
+                            VStack(spacing: 30) {
+                                Text("답변하지 않은 질문")
+                                    .font(.headline)
                                 
+                                Text("EnvironmentObject는 무엇이고 어떤 경우 사용할까요?")
+                                    .font(.title)
+                                
+                                ColorButton(title: "답변하기", buttonColor: .blue, textColor: Color(uiColor: .systemBackground), isDisabled: isEditing) {
+                                    
+                                }
                             }
-                        }
-                        .padding(10)
-                        .background {
-                            RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                                .strokeBorder(Color(uiColor: .systemGray3), lineWidth: 2)
+                            .padding(10)
+                            .background {
+                                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                    .strokeBorder(Color(uiColor: .systemGray3), lineWidth: 2)
+                            }
                         }
                         
                         ColorButton(title: "질문 추가하기", buttonColor: Color(uiColor: .systemGray5), isDisabled: isEditing) {
