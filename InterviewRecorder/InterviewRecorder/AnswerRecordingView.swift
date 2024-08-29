@@ -41,7 +41,3 @@ struct AnswerRecordingView: View {
         .padding(10)
     }
 }
-
-//#Preview {
-//    AnswerRecordingView()
-//}
