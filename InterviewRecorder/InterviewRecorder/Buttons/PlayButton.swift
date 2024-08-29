@@ -18,8 +18,26 @@ struct PlayButton<T: View>: View {
         self.label = label
     }
     
+    struct CustomButton: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .minimumScaleFactor(0.3)
+                .overlay {
+                    GeometryReader { geometry in
+                        ZStack {
+                            if configuration.isPressed {
+                                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                    .foregroundStyle(.foreground.opacity(0.1))
+                            }
+                        }
+                        .frame(height: geometry.size.height)
+                    }
+                }
+        }
+    }
+    
     var body: some View {
         Button(action: action, label: label)
-            .buttonStyle(CustomButtonStyle())
+            .buttonStyle(CustomButton())
     }
 }
