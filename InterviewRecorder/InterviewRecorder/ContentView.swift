@@ -79,6 +79,7 @@ struct ContentView: View {
                     } label: {
                         Label(editButtonText, systemImage: editIconName)
                     }
+                    .disabled(questions.isEmpty)
                 }
             }
             .navigationDestination(isPresented: $isShowingNewQuestion) {
@@ -87,6 +88,7 @@ struct ContentView: View {
             .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
                 Button("취소", role: .cancel) {
                     isShowingDeleteAlert = false
+                    isEditing = false
                 }
                 
                 Button("확인", role: .destructive) {
@@ -94,6 +96,9 @@ struct ContentView: View {
                         modelContext.delete(selectedQuestion)
                     }
                     isShowingDeleteAlert = false
+                    if questions.isEmpty {
+                        isEditing = false
+                    }
                 }
             } message: {
                 Text("녹음된 답변도 같이 삭제됩니다.")
