@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2260882C7D62CC009C51B6 /* QuestionCell.swift */; };
 		9B22608C2C7D7062009C51B6 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B22608B2C7D7062009C51B6 /* DeleteButton.swift */; };
+		9B3528042C80BDAE0099F3A6 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3528032C80BDAE0099F3A6 /* DateConverter.swift */; };
 		9B4378D42C80126000908BFC /* AnswerRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D32C80126000908BFC /* AnswerRecordingView.swift */; };
 		9B4378D62C801E8400908BFC /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D52C801E8400908BFC /* PlayButton.swift */; };
 		9B4378D82C80221300908BFC /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D72C80221300908BFC /* CustomButtonStyle.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		9B2260882C7D62CC009C51B6 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
 		9B22608B2C7D7062009C51B6 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
+		9B3528032C80BDAE0099F3A6 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		9B4378D32C80126000908BFC /* AnswerRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRecordingView.swift; sourceTree = "<group>"; };
 		9B4378D52C801E8400908BFC /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		9B4378D72C80221300908BFC /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
@@ -65,6 +67,14 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		9B3528022C80BD650099F3A6 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				9B3528032C80BDAE0099F3A6 /* DateConverter.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
 		9B7662E82C6DAD0200A41D3D = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +103,7 @@
 				9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */,
 				9B22608D2C7D71ED009C51B6 /* Buttons */,
 				9B7663062C6DEE9700A41D3D /* Models */,
+				9B3528022C80BD650099F3A6 /* Others */,
 				9B7662F82C6DAD0300A41D3D /* Assets.xcassets */,
 				9B7662FA2C6DAD0300A41D3D /* Preview Content */,
 			);
@@ -186,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B3528042C80BDAE0099F3A6 /* DateConverter.swift in Sources */,
 				9B7358572C7C7A6300126144 /* QuestionEditor.swift in Sources */,
 				9B7663032C6DED9100A41D3D /* AudioRecordManager.swift in Sources */,
 				9B4378D42C80126000908BFC /* AnswerRecordingView.swift in Sources */,
