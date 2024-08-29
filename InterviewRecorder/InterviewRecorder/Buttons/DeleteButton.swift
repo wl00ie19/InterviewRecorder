@@ -11,26 +11,6 @@ struct DeleteButton: View {
     // 버튼 동작
     var deleteAction: () -> ()
     
-    struct DeleteButton: ButtonStyle {
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .font(.title2)
-                .lineLimit(1)
-                .minimumScaleFactor(0.3)
-                .overlay {
-                    GeometryReader { geometry in
-                        ZStack {
-                            if configuration.isPressed {
-                                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                                    .foregroundStyle(.foreground.opacity(0.1))
-                            }
-                        }
-                        .frame(height: geometry.size.height)
-                    }
-                }
-        }
-    }
-    
     var body: some View {
         Button {
             deleteAction()
@@ -45,6 +25,6 @@ struct DeleteButton: View {
                         .foregroundStyle(.red)
                 }
         }
-        .buttonStyle(DeleteButton())
+        .buttonStyle(CustomButtonStyle())
     }
 }
