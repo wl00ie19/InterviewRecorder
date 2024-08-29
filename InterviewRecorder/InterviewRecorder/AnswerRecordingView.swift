@@ -6,20 +6,33 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AnswerRecordingView: View {
+    @Environment(\.modelContext) var modelContext
+    
+    var question: Question
+    
     var body: some View {
         VStack {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("질문: ")
-                    .font(.headline)
+            HStack {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("질문: ")
+                        .font(.headline)
+                    
+                    Text(question.content)
+                        .font(.title)
+                }
                 
-                Text("EnvironmentObject는 무엇이고 어떤 경우 사용할까요?")
-                    .font(.title)
+                Spacer()
             }
             .padding(.bottom, 30)
             
-            Text("답변하지 않은 질문입니다.")
+            if question.isAnswered {
+                Text("답변한 질문입니다.")
+            } else {
+                Text("답변하지 않은 질문입니다.")
+            }
             
             ColorButton(title: "녹음하기", buttonColor: .orange, textColor: Color(uiColor: .systemBackground)) {
                 
@@ -29,6 +42,6 @@ struct AnswerRecordingView: View {
     }
 }
 
-#Preview {
-    AnswerRecordingView()
-}
+//#Preview {
+//    AnswerRecordingView()
+//}

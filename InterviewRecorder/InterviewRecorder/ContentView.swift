@@ -64,7 +64,11 @@ struct ContentView: View {
                     
                     ForEach(questions) { question in
                         QuestionCell(title: question.content, isEditing: $isEditing) {
+                            selectedQuestion = question
                             
+                            if selectedQuestion != nil {
+                                isShowingRecordAnswer.toggle()
+                            }
                         } deleteAction: {
                             selectedQuestion = question
                             isShowingDeleteAlert.toggle()
@@ -86,6 +90,11 @@ struct ContentView: View {
             }
             .navigationDestination(isPresented: $isShowingNewQuestion) {
                 NewQuestionView(isShowingNewQuestion: $isShowingNewQuestion)
+            }
+            .navigationDestination(isPresented: $isShowingRecordAnswer) {
+                if let selectedQuestion {
+                    AnswerRecordingView(question: selectedQuestion)
+                }
             }
             .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
                 Button("취소", role: .cancel) {
