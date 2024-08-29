@@ -68,5 +68,7 @@ struct ColorButton: View {
             }
         }
         .buttonStyle(CustomButton())
+        .opacity(isDisabled ? 0.5 : 1)
+        .disabled(isDisabled)
     }
 }

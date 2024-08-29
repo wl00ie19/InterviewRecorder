@@ -29,9 +29,11 @@ struct NewQuestionView: View {
                     .focused($focused)
                     .frame(height: geometry.size.height * 0.4)
                 
-                ColorButton(title: "추가", buttonColor: .blue, textColor: Color(uiColor: .systemBackground)) {
-                    isShowingNewQuestion = false
-                    modelContext.insert(Question(id: UUID().uuidString, content: content, questionDate: Date()))
+                ColorButton(title: "추가", buttonColor: .blue, textColor: Color(uiColor: .systemBackground), isDisabled: content.isEmpty) {
+                    if !content.isEmpty {
+                        isShowingNewQuestion = false
+                        modelContext.insert(Question(id: UUID().uuidString, content: content, questionDate: Date()))
+                    }
                 }
                 
                 Spacer()
