@@ -8,31 +8,46 @@
 import SwiftUI
 
 struct RecordVolumeGauge: View {
+    @EnvironmentObject var recordManager: AudioRecordManager
+    
+    private var timeText: String {
+        recordManager.second >= 10 ? "\(recordManager.minute):\(recordManager.second)" : "\(recordManager.minute):0\(recordManager.second)"
+    }
+    
+    private var isRecording: Bool {
+        recordManager.status == .record
+    }
+    
     var body: some View {
-        @State var volumeLevel = 0.60
-        
         ZStack(alignment: .center) {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .foregroundStyle(.gray)
                         .frame(width: geometry.size.width)
-                    Rectangle()
-                        .foregroundStyle(.green)
-                        .frame(width: geometry.size.width * volumeLevel)
+                    
+                    if isRecording {
+                        Rectangle()
+                            .foregroundStyle(Color.volumeGauge)
+                            .frame(width: geometry.size.width * recordManager.audioLevel)
+                    }
                 }
             }
             
-            Label("녹음 중 - 0:01", systemImage: "mic.circle.fill")
-                .lineLimit(1)
-                .minimumScaleFactor(0.3)
-                .foregroundStyle(.background)
-                .font(.title)
+            if isRecording {
+                Label("녹음 중 - \(timeText)", systemImage: "mic.circle.fill")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.3)
+                    .foregroundStyle(.background)
+                    .font(.title2)
+            } else {
+                Text("답변하지 않은 질문입니다.")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.3)
+                    .foregroundStyle(.background)
+                    .font(.title2)
+            }
         }
         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
     }
-}
-
-#Preview {
-    RecordVolumeGauge()
 }

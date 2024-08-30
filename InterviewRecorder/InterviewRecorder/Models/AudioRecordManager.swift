@@ -25,17 +25,19 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     private var startTime: TimeInterval = 0
     
+    private var recordFileURLString: String = ""
+    
     /// 녹음 진행 시간
-    @Published var recordTime: Int = 0
+    @Published var recordTime: Double = 0
     
     /// 녹음 진행 시간(분)
     var minute: Int {
-        recordTime / 60
+        Int(recordTime / 60)
     }
     
     /// 녹음 진행 시간(초)
     var second: Int {
-        recordTime % 60
+        Int(recordTime) % 60
     }
     
     /// 녹음 시작 - 질문 ID 필요
@@ -58,6 +60,8 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
         
         var fileURL = documentPath.appending(path: "\(fileName).m4a")
+        
+        recordFileURLString = fileURL.relativePath
         
         var fileIndex = 1
         
@@ -87,7 +91,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             
             timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
                 self.getAudiolevels()
-                self.recordTime = Int(Date().timeIntervalSince1970 - self.startTime)
+                self.recordTime = Date().timeIntervalSince1970 - self.startTime
             }
         } catch {
             errorMessage = .startFail
@@ -106,9 +110,10 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
     
     /// 녹음 정지
-    func stopRecord() {
+    func stopRecord() -> (String, Double) {
         audioRecorder?.stop()
         timer?.invalidate()
+        let length = recordTime
         recordTime = 0
         audioLevel = 0.0
         
@@ -117,6 +122,8 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             errorMessage = nil
             status = .stop
         }
+        
+        return (recordFileURLString, length)
     }
     
     /// 녹음 목록 새로고침

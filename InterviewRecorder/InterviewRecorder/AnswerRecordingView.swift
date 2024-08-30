@@ -10,8 +10,12 @@ import SwiftData
 
 struct AnswerRecordingView: View {
     @Environment(\.modelContext) var modelContext
+    @EnvironmentObject var recordManager: AudioRecordManager
+    @State var question: Question
     
-    var question: Question
+    private var isRecording: Bool {
+        recordManager.status == .record
+    }
     
     var body: some View {
         VStack {
@@ -29,14 +33,41 @@ struct AnswerRecordingView: View {
             .padding(.bottom, 30)
             
             if question.isAnswered {
-                Text("답변한 질문입니다.")
+                PlayButton {
+                    if recordManager.status == .play {
+                        recordManager.stopPlay()
+                    } else {
+                        if let urlString = question.answerURLString {
+                            recordManager.startPlay(fileURLString: urlString)
+                            
+                            print(urlString)
+                        }
+                    }
+                    
+                } label: {
+                    Text("답변한 질문입니다.\(question.answerLength ?? 0.0) \(recordManager.errorMessage?.rawValue ?? "")")
+                }
+                .disabled(isRecording)
+
             } else {
-                Text("답변하지 않은 질문입니다.")
+                RecordVolumeGauge()
+                    .frame(height: 80)
             }
             
-            ColorButton(title: "녹음하기", buttonColor: .orange, textColor: Color(uiColor: .systemBackground)) {
-                
+            ColorButton(title: isRecording ? "정지" : "녹음하기" , buttonColor: isRecording ? .nowRecording : .recordButton, textColor: Color(uiColor: .systemBackground)) {
+                if isRecording {
+                    let (answerURLString, length) = recordManager.stopRecord()
+                    
+                    question.answerURLString = answerURLString
+                    question.answerLength = length
+                    question.lastAnsweredDate = Date()
+                    
+                    modelContext.insert(question)
+                } else {
+                    recordManager.startRecord(questionID: question.id)
+                }
             }
+            .disabled(question.isAnswered)
         }
         .padding(10)
     }
