@@ -20,15 +20,12 @@ struct QuestionCell: View {
     struct CustomCell: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
-                .overlay {
+                .foregroundStyle(configuration.isPressed ? Color(uiColor: .systemBackground) : .primary)
+                .background {
                     GeometryReader { geometry in
-                        ZStack {
-                            if configuration.isPressed {
-                                Rectangle()
-                                    .foregroundStyle(.foreground.opacity(0.1))
-                            }
-                        }
-                        .frame(height: geometry.size.height)
+                        Rectangle()
+                            .foregroundStyle(configuration.isPressed ? .blue : Color(uiColor: .systemBackground))
+                            .frame(height: geometry.size.height)
                     }
                 }
         }
