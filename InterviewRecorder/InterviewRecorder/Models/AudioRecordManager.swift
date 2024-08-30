@@ -187,7 +187,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
     
     /// 해당 URL의 녹음 파일 삭제
-    func deleteRecord(fileURLString: String) {
+    func deleteRecord(fileName: String) {
         errorMessage = nil
         
         // 삭제 전 재생 및 녹음 정지
@@ -198,16 +198,18 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer?.stop()
         }
         
-        // 해당 URL의 녹음 파일 지우기, 녹음 URL 목록 삭제
-        if let recordURL = URL(string: fileURLString) {
-            do {
-                try FileManager.default.removeItem(at: recordURL)
-                recordedFiles.removeAll{ $0 == recordURL }
-            } catch {
-                errorMessage = .deleteFail
-            }
-        } else {
-            errorMessage = .playingFail
+        guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            errorMessage = .startFail
+            return
+        }
+        
+        let recordURL = documentPath.appending(path: fileName)
+        
+        do {
+            try FileManager.default.removeItem(at: recordURL)
+            recordedFiles.removeAll{ $0 == recordURL }
+        } catch {
+            errorMessage = .deleteFail
         }
     }
     

@@ -13,6 +13,8 @@ struct ContentView: View {
     
     @Query(sort: \Question.questionDate) var questions: [Question]
     
+    @EnvironmentObject var recordManager: AudioRecordManager
+    
     @State private var isShowingRecordAnswer: Bool = false
     
     @State private var isShowingNewQuestion: Bool = false
@@ -81,6 +83,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        selectedQuestion = nil
                         isEditing.toggle()
                     } label: {
                         Label(editButtonText, systemImage: editIconName)
@@ -99,11 +102,16 @@ struct ContentView: View {
             .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
                 Button("취소", role: .cancel) {
                     isShowingDeleteAlert = false
+                    selectedQuestion = nil
                     isEditing = false
                 }
                 
                 Button("확인", role: .destructive) {
                     if let selectedQuestion {
+                        if let fileName = selectedQuestion.answerFileName {
+                            recordManager.deleteRecord(fileName: fileName)
+                            isEditing = false
+                        }
                         modelContext.delete(selectedQuestion)
                     }
                     isShowingDeleteAlert = false
@@ -112,7 +120,7 @@ struct ContentView: View {
                     }
                 }
             } message: {
-                Text("녹음된 답변도 같이 삭제됩니다.")
+                Text(selectedQuestion?.isAnswered ?? false ? "한번 삭제된 질문은 복구할 수 없으며, 녹음된 답변도 같이 삭제됩니다." : "한번 삭제된 질문은 복구할 수 없습니다.")
             }
             
         }
