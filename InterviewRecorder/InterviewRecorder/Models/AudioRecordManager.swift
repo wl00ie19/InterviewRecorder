@@ -25,7 +25,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     private var startTime: TimeInterval = 0
     
-    private var recordFileURLString: String = ""
+    private var fileName: String = ""
     
     /// 녹음 진행 시간
     @Published var recordTime: Double = 0
@@ -52,23 +52,21 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             errorMessage = .startFail
         }
         
-        let fileName = questionID + dateConverter.toFileNameString(date: Date())
+        fileName = "\(questionID)_\(dateConverter.toFileNameString(date: Date())).m4a"
         
         guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             errorMessage = .startFail
             return
         }
         
-        var fileURL = documentPath.appending(path: "\(fileName).m4a")
-        
-        recordFileURLString = fileURL.relativePath
+        var fileURL = documentPath.appending(path: fileName)
         
         var fileIndex = 1
         
         // 파일 중복 확인
         while FileManager.default.fileExists(atPath: fileURL.path()) {
-            let newFileName = "\(fileName)_\(fileIndex)"
-            fileURL = documentPath.appending(path: "\(newFileName).m4a")
+            fileName = "\(fileName)_\(fileIndex)"
+            fileURL = documentPath.appending(path: fileName)
             fileIndex += 1
         }
         
@@ -123,7 +121,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             status = .stop
         }
         
-        return (recordFileURLString, length)
+        return (fileName, length)
     }
     
     /// 녹음 목록 새로고침
@@ -144,24 +142,27 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
-    /// 해당 URL의 녹음 파일 재생 시작
-    func startPlay(fileURLString: String) {
+    /// 해당 파일명의 녹음 파일 재생 시작
+    func startPlay(fileName: String) {
         errorMessage = nil
         
+        guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            errorMessage = .playingFail
+            return
+        }
+        
+        let recordingURL = documentPath.appending(path: fileName)
+        
         // 재생 시작
-        if let recordingURL = URL(string: fileURLString) {
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
-                if let audioPlayer {
-                    audioPlayer.prepareToPlay()
-                    audioPlayer.delegate = self
-                    audioPlayer.play()
-                    status = .play
-                }
-            } catch {
-                errorMessage = .playingFail
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+            if let audioPlayer {
+                audioPlayer.prepareToPlay()
+                audioPlayer.delegate = self
+                audioPlayer.play()
+                status = .play
             }
-        } else {
+        } catch {
             errorMessage = .playingFail
         }
     }

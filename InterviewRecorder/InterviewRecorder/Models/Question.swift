@@ -19,8 +19,8 @@ class Question: Identifiable {
     /// 질문 등록 일자
     let questionDate: Date
     
-    /// 답변 녹음 파일 URL
-    var answerURLString: String?
+    /// 답변 녹음 파일명
+    var answerFileName: String?
     
     /// 답변 녹음 파일 길이
     var answerLength: Double?
@@ -30,7 +30,7 @@ class Question: Identifiable {
     
     /// 답변 여부
     var isAnswered: Bool {
-        answerURLString != nil
+        answerFileName != nil
     }
     
     init(id: String, content: String, questionDate: Date) {

@@ -37,10 +37,10 @@ struct AnswerRecordingView: View {
                     if recordManager.status == .play {
                         recordManager.stopPlay()
                     } else {
-                        if let urlString = question.answerURLString {
-                            recordManager.startPlay(fileURLString: urlString)
+                        if let fileName = question.answerFileName {
+                            recordManager.startPlay(fileName: fileName)
                             
-                            print(urlString)
+                            print(fileName)
                         }
                     }
                     
@@ -58,7 +58,7 @@ struct AnswerRecordingView: View {
                 if isRecording {
                     let (answerURLString, length) = recordManager.stopRecord()
                     
-                    question.answerURLString = answerURLString
+                    question.answerFileName = answerURLString
                     question.answerLength = length
                     question.lastAnsweredDate = Date()
                     
