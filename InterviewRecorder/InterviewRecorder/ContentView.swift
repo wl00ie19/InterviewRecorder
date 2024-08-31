@@ -23,6 +23,8 @@ struct ContentView: View {
     
     @State private var isShowingDeleteAlert: Bool = false
     
+    @State private var isShowingSaveAlert: Bool = false
+    
     @State private var selectedQuestion: Question?
     
     var editButtonText: String {
@@ -104,14 +106,8 @@ struct ContentView: View {
             if !isShowingRecordAnswer {
                 switch recordManager.status {
                 case .record:
-                    if let selectedQuestion {
-                        let (answerURLString, length) = recordManager.stopRecord()
-                        
-                        selectedQuestion.answerFileName = answerURLString
-                        selectedQuestion.answerLength = length
-                        selectedQuestion.lastAnsweredDate = Date()
-                        
-                        modelContext.insert(selectedQuestion)
+                    if selectedQuestion != nil {
+                        isShowingSaveAlert.toggle()
                     }
                 case .play, .pause:
                     recordManager.stopPlay()
@@ -138,6 +134,26 @@ struct ContentView: View {
                 isShowingDeleteAlert = false
                 if questions.isEmpty {
                     isEditing = false
+                }
+            }
+        } message: {
+            Text(selectedQuestion?.isAnswered ?? false ? "한번 삭제된 질문은 복구할 수 없으며, 녹음된 답변도 같이 삭제됩니다." : "한번 삭제된 질문은 복구할 수 없습니다.")
+        }
+        .alert("답변을 저장할까요?", isPresented: $isShowingSaveAlert) {
+            Button("취소", role: .cancel) {
+                let (_, _) = recordManager.stopRecord()
+                isShowingSaveAlert = false
+            }
+            
+            Button("확인", role: .destructive) {
+                if let selectedQuestion {
+                    let (answerURLString, length) = recordManager.stopRecord()
+                    
+                    selectedQuestion.answerFileName = answerURLString
+                    selectedQuestion.answerLength = length
+                    selectedQuestion.lastAnsweredDate = Date()
+                    
+                    modelContext.insert(selectedQuestion)
                 }
             }
         } message: {
