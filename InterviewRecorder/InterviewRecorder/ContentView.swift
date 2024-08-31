@@ -129,7 +129,7 @@ struct ContentView: View {
                 isEditing = false
             }
             
-            Button("확인", role: .destructive) {
+            Button("삭제", role: .destructive) {
                 if let selectedQuestion {
                     if let fileName = selectedQuestion.answerFileName {
                         recordManager.deleteRecord(fileName: fileName)
