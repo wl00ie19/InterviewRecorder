@@ -99,30 +99,49 @@ struct ContentView: View {
                     AnswerRecordingView(question: selectedQuestion)
                 }
             }
-            .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
-                Button("취소", role: .cancel) {
-                    isShowingDeleteAlert = false
-                    selectedQuestion = nil
-                    isEditing = false
-                }
-                
-                Button("확인", role: .destructive) {
+        }
+        .onChange(of: $isShowingRecordAnswer.wrappedValue) {
+            if !isShowingRecordAnswer {
+                switch recordManager.status {
+                case .record:
                     if let selectedQuestion {
-                        if let fileName = selectedQuestion.answerFileName {
-                            recordManager.deleteRecord(fileName: fileName)
-                            isEditing = false
-                        }
-                        modelContext.delete(selectedQuestion)
+                        let (answerURLString, length) = recordManager.stopRecord()
+                        
+                        selectedQuestion.answerFileName = answerURLString
+                        selectedQuestion.answerLength = length
+                        selectedQuestion.lastAnsweredDate = Date()
+                        
+                        modelContext.insert(selectedQuestion)
                     }
-                    isShowingDeleteAlert = false
-                    if questions.isEmpty {
-                        isEditing = false
-                    }
+                case .play, .pause:
+                    recordManager.stopPlay()
+                case .stop:
+                    break
                 }
-            } message: {
-                Text(selectedQuestion?.isAnswered ?? false ? "한번 삭제된 질문은 복구할 수 없으며, 녹음된 답변도 같이 삭제됩니다." : "한번 삭제된 질문은 복구할 수 없습니다.")
+            }
+        }
+        .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
+            Button("취소", role: .cancel) {
+                isShowingDeleteAlert = false
+                selectedQuestion = nil
+                isEditing = false
             }
             
+            Button("확인", role: .destructive) {
+                if let selectedQuestion {
+                    if let fileName = selectedQuestion.answerFileName {
+                        recordManager.deleteRecord(fileName: fileName)
+                        isEditing = false
+                    }
+                    modelContext.delete(selectedQuestion)
+                }
+                isShowingDeleteAlert = false
+                if questions.isEmpty {
+                    isEditing = false
+                }
+            }
+        } message: {
+            Text(selectedQuestion?.isAnswered ?? false ? "한번 삭제된 질문은 복구할 수 없으며, 녹음된 답변도 같이 삭제됩니다." : "한번 삭제된 질문은 복구할 수 없습니다.")
         }
     }
 }
