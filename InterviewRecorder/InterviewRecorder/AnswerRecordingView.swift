@@ -35,7 +35,7 @@ struct AnswerRecordingView: View {
             .padding(.bottom, 30)
             
             if question.isAnswered {
-                PlayButton {
+                PlayButton(question: $question) {
                     switch recordManager.status {
                     case .stop:
                         if let fileName = question.answerFileName {
@@ -48,48 +48,8 @@ struct AnswerRecordingView: View {
                     case .record:
                         break
                     }
-                } label: {
-                    ZStack(alignment: .center) {
-                        GeometryReader { geometry in
-                            ZStack(alignment: .leading) {
-                                Rectangle()
-                                    .foregroundStyle(Color.playButton)
-                                    .frame(width: geometry.size.width)
-                                
-                                Rectangle()
-                                    .foregroundStyle(Color.nowPlaying)
-                                    .frame(width: geometry.size.width * (recordManager.elapsedTime / (question.answerLength ?? 1)))
-                            }
-                        }
-                        
-                        if recordManager.status == .play {
-                            VStack {
-                                Text("재생 중 - \(dateConverter.toTimeString(elapsedTime: recordManager.elapsedTime)) / \(dateConverter.toTimeString(elapsedTime: question.answerLength ?? 0))")
-                                    .font(.title2)
-                                Text("누르면 일시 정지")
-                                    .font(.subheadline)
-                            }
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.3)
-                            .foregroundStyle(.background)
-                            
-                        } else {
-                            VStack {
-                                Text("답변 듣기")
-                                    .font(.title2)
-                                if let date = question.lastAnsweredDate {
-                                    Text("\(dateConverter.toDisplayString(date: date)) 녹음")
-                                        .font(.subheadline)
-                                }
-                            }
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.3)
-                            .foregroundStyle(.background)
-                        }
-                    }
-                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
-                    .frame(height: 80)
                 }
+                .frame(height: 80)
                 .disabled(isRecording)
             } else {
                 RecordVolumeGauge()
