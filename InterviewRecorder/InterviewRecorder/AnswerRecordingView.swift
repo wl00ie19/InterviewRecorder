@@ -38,18 +38,44 @@ struct AnswerRecordingView: View {
             
             if question.isAnswered {
                 PlayButton {
-                    if recordManager.status == .play {
-                        recordManager.stopPlay()
-                    } else {
+                    switch recordManager.status {
+                    case .stop:
                         if let fileName = question.answerFileName {
                             recordManager.startPlay(fileName: fileName)
-                            
-                            print(fileName)
+                        }
+                    case .play:
+                        recordManager.pausePlay()
+                    case .pause:
+                        recordManager.resumePlay()
+                    case .record:
+                        break
+                    }
+                } label: {
+                    ZStack(alignment: .center) {
+                        GeometryReader { geometry in
+                            ZStack(alignment: .leading) {
+                                Rectangle()
+                                    .foregroundStyle(recordManager.status == .play ? Color.nowPlaying : Color.playButton)
+                                    .frame(width: geometry.size.width)
+                            }
+                        }
+                        
+                        if recordManager.status == .play {
+                            Text("재생 중 - \(timeText)")
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.3)
+                                .foregroundStyle(.background)
+                                .font(.title2)
+                        } else {
+                            Text("답변을 들으려면 누르세요")
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.3)
+                                .foregroundStyle(.background)
+                                .font(.title2)
                         }
                     }
-                    
-                } label: {
-                    Text("답변한 질문입니다.\(timeText) \(recordManager.errorMessage?.rawValue ?? "")")
+                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                    .frame(height: 80)
                 }
                 .disabled(isRecording)
 
