@@ -63,24 +63,34 @@ struct AnswerRecordingView: View {
                         }
                         
                         if recordManager.status == .play {
-                            Text("재생 중 - \(dateConverter.toTimeString(elapsedTime: recordManager.elapsedTime)) / \(dateConverter.toTimeString(elapsedTime: question.answerLength ?? 0))")
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.3)
-                                .foregroundStyle(.background)
-                                .font(.title2)
+                            VStack {
+                                Text("재생 중 - \(dateConverter.toTimeString(elapsedTime: recordManager.elapsedTime)) / \(dateConverter.toTimeString(elapsedTime: question.answerLength ?? 0))")
+                                    .font(.title2)
+                                Text("누르면 일시 정지")
+                                    .font(.subheadline)
+                            }
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.3)
+                            .foregroundStyle(.background)
+                            
                         } else {
-                            Text("답변을 들으려면 누르세요")
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.3)
-                                .foregroundStyle(.background)
-                                .font(.title2)
+                            VStack {
+                                Text("답변 듣기")
+                                    .font(.title2)
+                                if let date = question.lastAnsweredDate {
+                                    Text("\(dateConverter.toDisplayString(date: date)) 녹음")
+                                        .font(.subheadline)
+                                }
+                            }
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.3)
+                            .foregroundStyle(.background)
                         }
                     }
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                     .frame(height: 80)
                 }
                 .disabled(isRecording)
-
             } else {
                 RecordVolumeGauge()
                     .frame(height: 80)
