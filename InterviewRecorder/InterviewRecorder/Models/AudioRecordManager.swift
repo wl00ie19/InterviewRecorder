@@ -28,16 +28,16 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     private var fileName: String = ""
     
     /// 녹음 진행 시간
-    @Published var recordTime: Double = 0
+    @Published var elapsedTime: Double = 0
     
     /// 녹음 진행 시간(분)
     var minute: Int {
-        Int(recordTime / 60)
+        Int(elapsedTime / 60)
     }
     
     /// 녹음 진행 시간(초)
     var second: Int {
-        Int(recordTime) % 60
+        Int(elapsedTime) % 60
     }
     
     /// 녹음 시작 - 질문 ID 필요
@@ -89,7 +89,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             
             timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
                 self.getAudiolevels()
-                self.recordTime = Date().timeIntervalSince1970 - self.startTime
+                self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
             }
         } catch {
             errorMessage = .startFail
@@ -111,14 +111,12 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func stopRecord() -> (String, Double) {
         audioRecorder?.stop()
         timer?.invalidate()
-        let length = recordTime
-        recordTime = 0
+        let length = elapsedTime
         audioLevel = 0.0
+        resetStatus()
         
         if self.audioRecorder != nil {
             fetchData()
-            errorMessage = nil
-            status = .stop
         }
         
         return (fileName, length)
@@ -158,9 +156,15 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
             if let audioPlayer {
                 audioPlayer.prepareToPlay()
+                startTime = Date().timeIntervalSince1970
                 audioPlayer.delegate = self
                 audioPlayer.play()
                 status = .play
+                
+                timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+                    self.getAudiolevels()
+                    self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
+                }
             }
         } catch {
             errorMessage = .playingFail
@@ -171,19 +175,26 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func pausePlay() {
         audioPlayer?.pause()
         status = .pause
+        timer?.invalidate()
     }
     
     /// 재생 계속하기
     func resumePlay() {
         audioPlayer?.play()
         status = .play
+        
+        startTime = Date().timeIntervalSince1970 - elapsedTime
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+            self.getAudiolevels()
+            self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
+        }
     }
     
     /// 재생 중단
     func stopPlay() {
         audioPlayer?.stop()
-        errorMessage = nil
-        status = .stop
+        resetStatus()
     }
     
     /// 해당 URL의 녹음 파일 삭제
@@ -214,7 +225,14 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        resetStatus()
+    }
+    
+    private func resetStatus() {
+        errorMessage = nil
         status = .stop
+        elapsedTime = 0
+        timer?.invalidate()
     }
 }
 

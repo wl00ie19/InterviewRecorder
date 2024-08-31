@@ -17,6 +17,10 @@ struct AnswerRecordingView: View {
         recordManager.status == .record
     }
     
+    private var timeText: String {
+        recordManager.second >= 10 ? "\(recordManager.minute):\(recordManager.second)" : "\(recordManager.minute):0\(recordManager.second)"
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -45,7 +49,7 @@ struct AnswerRecordingView: View {
                     }
                     
                 } label: {
-                    Text("답변한 질문입니다.\(question.answerLength ?? 0.0) \(recordManager.errorMessage?.rawValue ?? "")")
+                    Text("답변한 질문입니다.\(timeText) \(recordManager.errorMessage?.rawValue ?? "")")
                 }
                 .disabled(isRecording)
 
