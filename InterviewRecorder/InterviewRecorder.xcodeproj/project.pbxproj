@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2260882C7D62CC009C51B6 /* QuestionCell.swift */; };
 		9B22608C2C7D7062009C51B6 /* DeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B22608B2C7D7062009C51B6 /* DeleteButton.swift */; };
+		9B3528042C80BDAE0099F3A6 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3528032C80BDAE0099F3A6 /* DateConverter.swift */; };
+		9B4378D42C80126000908BFC /* AnswerRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D32C80126000908BFC /* AnswerRecordingView.swift */; };
+		9B4378D62C801E8400908BFC /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D52C801E8400908BFC /* PlayButton.swift */; };
+		9B4378D82C80221300908BFC /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4378D72C80221300908BFC /* CustomButtonStyle.swift */; };
+		9B5807A92C806C9E005EA8C2 /* RecordVolumeGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */; };
+		9B6E45492C8160B900F2B8EE /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6E45482C8160B900F2B8EE /* Color+Extension.swift */; };
 		9B7358572C7C7A6300126144 /* QuestionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7358562C7C7A6200126144 /* QuestionEditor.swift */; };
 		9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */; };
 		9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7662F42C6DAD0200A41D3D /* InterviewRecorderApp.swift */; };
@@ -23,6 +29,12 @@
 /* Begin PBXFileReference section */
 		9B2260882C7D62CC009C51B6 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
 		9B22608B2C7D7062009C51B6 /* DeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButton.swift; sourceTree = "<group>"; };
+		9B3528032C80BDAE0099F3A6 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
+		9B4378D32C80126000908BFC /* AnswerRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRecordingView.swift; sourceTree = "<group>"; };
+		9B4378D52C801E8400908BFC /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
+		9B4378D72C80221300908BFC /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
+		9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVolumeGauge.swift; sourceTree = "<group>"; };
+		9B6E45482C8160B900F2B8EE /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		9B7358562C7C7A6200126144 /* QuestionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionEditor.swift; sourceTree = "<group>"; };
 		9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuestionView.swift; sourceTree = "<group>"; };
 		9B7662F12C6DAD0200A41D3D /* InterviewRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InterviewRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,8 +63,19 @@
 			children = (
 				9BDF04802C74914000448EF0 /* ColorButton.swift */,
 				9B22608B2C7D7062009C51B6 /* DeleteButton.swift */,
+				9B4378D52C801E8400908BFC /* PlayButton.swift */,
+				9B4378D72C80221300908BFC /* CustomButtonStyle.swift */,
 			);
 			path = Buttons;
+			sourceTree = "<group>";
+		};
+		9B3528022C80BD650099F3A6 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				9B3528032C80BDAE0099F3A6 /* DateConverter.swift */,
+				9B6E45482C8160B900F2B8EE /* Color+Extension.swift */,
+			);
+			path = Others;
 			sourceTree = "<group>";
 		};
 		9B7662E82C6DAD0200A41D3D = {
@@ -79,8 +102,11 @@
 				9B2260882C7D62CC009C51B6 /* QuestionCell.swift */,
 				9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */,
 				9B7358562C7C7A6200126144 /* QuestionEditor.swift */,
+				9B4378D32C80126000908BFC /* AnswerRecordingView.swift */,
+				9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */,
 				9B22608D2C7D71ED009C51B6 /* Buttons */,
 				9B7663062C6DEE9700A41D3D /* Models */,
+				9B3528022C80BD650099F3A6 /* Others */,
 				9B7662F82C6DAD0300A41D3D /* Assets.xcassets */,
 				9B7662FA2C6DAD0300A41D3D /* Preview Content */,
 			);
@@ -174,15 +200,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B3528042C80BDAE0099F3A6 /* DateConverter.swift in Sources */,
+				9B6E45492C8160B900F2B8EE /* Color+Extension.swift in Sources */,
 				9B7358572C7C7A6300126144 /* QuestionEditor.swift in Sources */,
 				9B7663032C6DED9100A41D3D /* AudioRecordManager.swift in Sources */,
+				9B4378D42C80126000908BFC /* AnswerRecordingView.swift in Sources */,
 				9B7663052C6DEE8F00A41D3D /* Question.swift in Sources */,
 				9B75EF5E2C6F70AE00BCF344 /* NewQuestionView.swift in Sources */,
+				9B4378D62C801E8400908BFC /* PlayButton.swift in Sources */,
+				9B4378D82C80221300908BFC /* CustomButtonStyle.swift in Sources */,
 				9BDF04812C74914000448EF0 /* ColorButton.swift in Sources */,
 				9B22608C2C7D7062009C51B6 /* DeleteButton.swift in Sources */,
 				9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */,
 				9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */,
 				9B7662F52C6DAD0200A41D3D /* InterviewRecorderApp.swift in Sources */,
+				9B5807A92C806C9E005EA8C2 /* RecordVolumeGauge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +351,7 @@
 				DEVELOPMENT_TEAM = 3RM96676JN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "면접 질문의 답변을 녹음합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -354,6 +387,7 @@
 				DEVELOPMENT_TEAM = 3RM96676JN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "면접 질문의 답변을 녹음합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

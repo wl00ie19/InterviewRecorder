@@ -13,6 +13,8 @@ struct ContentView: View {
     
     @Query(sort: \Question.questionDate) var questions: [Question]
     
+    @EnvironmentObject var recordManager: AudioRecordManager
+    
     @State private var isShowingRecordAnswer: Bool = false
     
     @State private var isShowingNewQuestion: Bool = false
@@ -20,6 +22,8 @@ struct ContentView: View {
     @State private var isEditing: Bool = false
     
     @State private var isShowingDeleteAlert: Bool = false
+    
+    @State private var isShowingSaveAlert: Bool = false
     
     @State private var selectedQuestion: Question?
     
@@ -64,7 +68,11 @@ struct ContentView: View {
                     
                     ForEach(questions) { question in
                         QuestionCell(title: question.content, isEditing: $isEditing) {
+                            selectedQuestion = question
                             
+                            if selectedQuestion != nil {
+                                isShowingRecordAnswer.toggle()
+                            }
                         } deleteAction: {
                             selectedQuestion = question
                             isShowingDeleteAlert.toggle()
@@ -77,6 +85,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        selectedQuestion = nil
                         isEditing.toggle()
                     } label: {
                         Label(editButtonText, systemImage: editIconName)
@@ -87,25 +96,72 @@ struct ContentView: View {
             .navigationDestination(isPresented: $isShowingNewQuestion) {
                 NewQuestionView(isShowingNewQuestion: $isShowingNewQuestion)
             }
-            .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
-                Button("취소", role: .cancel) {
-                    isShowingDeleteAlert = false
-                    isEditing = false
+            .navigationDestination(isPresented: $isShowingRecordAnswer) {
+                if let selectedQuestion {
+                    AnswerRecordingView(question: selectedQuestion)
                 }
-                
-                Button("확인", role: .destructive) {
-                    if let selectedQuestion {
-                        modelContext.delete(selectedQuestion)
+            }
+        }
+        .onChange(of: $isShowingRecordAnswer.wrappedValue) {
+            if !isShowingRecordAnswer {
+                switch recordManager.status {
+                case .record:
+                    if selectedQuestion != nil {
+                        let (answerURLString, length) = recordManager.stopRecord()
+                        
+                        selectedQuestion?.answerFileName = answerURLString
+                        selectedQuestion?.answerLength = length
+                        selectedQuestion?.lastAnsweredDate = Date()
+                        
+                        isShowingSaveAlert.toggle()
                     }
-                    isShowingDeleteAlert = false
-                    if questions.isEmpty {
-                        isEditing = false
-                    }
+                case .play, .pause:
+                    recordManager.stopPlay()
+                case .stop:
+                    break
                 }
-            } message: {
-                Text("녹음된 답변도 같이 삭제됩니다.")
+            }
+        }
+        .alert("질문을 삭제할까요?", isPresented: $isShowingDeleteAlert) {
+            Button("취소", role: .cancel) {
+                isShowingDeleteAlert = false
+                selectedQuestion = nil
+                isEditing = false
             }
             
+            Button("삭제", role: .destructive) {
+                if let selectedQuestion {
+                    if let fileName = selectedQuestion.answerFileName {
+                        recordManager.deleteRecord(fileName: fileName)
+                        isEditing = false
+                    }
+                    modelContext.delete(selectedQuestion)
+                }
+                isShowingDeleteAlert = false
+                if questions.isEmpty {
+                    isEditing = false
+                }
+            }
+        } message: {
+            Text(selectedQuestion?.isAnswered ?? false ? "한번 삭제된 질문은 복구할 수 없으며, 녹음된 답변도 같이 삭제됩니다." : "한번 삭제된 질문은 복구할 수 없습니다.")
+        }
+        .alert("답변을 저장할까요?", isPresented: $isShowingSaveAlert) {
+            Button("취소", role: .cancel) {
+                isShowingSaveAlert = false
+                if let fileName = selectedQuestion?.answerFileName {
+                    recordManager.deleteRecord(fileName: fileName)
+                    selectedQuestion?.answerFileName = nil
+                }
+                selectedQuestion = nil
+            }
+            
+            Button("확인") {
+                if let selectedQuestion {
+                    modelContext.insert(selectedQuestion)
+                }
+            }
+        } message: {
+            Text(selectedQuestion?.isAnswered ?? false ? "한번 삭제된 질문은 복구할 수 없으며, 녹음된 답변도 같이 삭제됩니다." : "한번 삭제된 질문은 복구할 수 없습니다.")
         }
     }
 }

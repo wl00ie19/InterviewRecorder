@@ -23,26 +23,6 @@ struct ColorButton: View {
     // 버튼 동작
     var action: () -> ()
     
-    struct CustomButton: ButtonStyle {
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .font(.title2)
-                .lineLimit(1)
-                .minimumScaleFactor(0.3)
-                .overlay {
-                    GeometryReader { geometry in
-                        ZStack {
-                            if configuration.isPressed {
-                                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                                    .foregroundStyle(.foreground.opacity(0.1))
-                            }
-                        }
-                        .frame(height: geometry.size.height)
-                    }
-                }
-        }
-    }
-    
     var body: some View {
         Button {
             action()
@@ -62,12 +42,13 @@ struct ColorButton: View {
                 
                 Spacer()
             }
+            .font(.title2)
             .background {
                 RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
                     .foregroundStyle(buttonColor)
             }
         }
-        .buttonStyle(CustomButton())
+        .buttonStyle(CustomButtonStyle())
         .opacity(isDisabled ? 0.5 : 1)
         .disabled(isDisabled)
     }

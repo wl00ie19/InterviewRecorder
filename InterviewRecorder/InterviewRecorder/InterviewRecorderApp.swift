@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct InterviewRecorderApp: App {
+    @StateObject var recordManager = AudioRecordManager()
+    
     var modelContainer: ModelContainer = {
         let schema = Schema([Question.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -26,6 +28,7 @@ struct InterviewRecorderApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(modelContainer)
+                .environmentObject(recordManager)
         }
     }
 }

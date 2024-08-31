@@ -12,6 +12,8 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     var audioRecorder: AVAudioRecorder? = nil
     var audioPlayer: AVAudioPlayer? = nil
     
+    private let dateConverter = DateConverter.shared
+    
     @Published var status: RecordStatus = .stop
     @Published var errorMessage: ErrorType?
     @Published var audioLevel: CGFloat = 0.0
@@ -23,18 +25,10 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     private var startTime: TimeInterval = 0
     
+    private var fileName: String = ""
+    
     /// 녹음 진행 시간
-    @Published var recordTime: Int = 0
-    
-    /// 녹음 진행 시간(분)
-    var minute: Int {
-        recordTime / 60
-    }
-    
-    /// 녹음 진행 시간(초)
-    var second: Int {
-        recordTime % 60
-    }
+    @Published var elapsedTime: Double = 0
     
     /// 녹음 시작 - 질문 ID 필요
     func startRecord(questionID: String) {
@@ -48,21 +42,21 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             errorMessage = .startFail
         }
         
-        let fileName = questionID + dateToString(date: Date())
+        fileName = "\(questionID)_\(dateConverter.toFileNameString(date: Date())).m4a"
         
         guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             errorMessage = .startFail
             return
         }
         
-        var fileURL = documentPath.appending(path: "\(fileName).m4a")
+        var fileURL = documentPath.appending(path: fileName)
         
         var fileIndex = 1
         
         // 파일 중복 확인
         while FileManager.default.fileExists(atPath: fileURL.path()) {
-            let newFileName = "\(fileName)_\(fileIndex)"
-            fileURL = documentPath.appending(path: "\(newFileName).m4a")
+            fileName = "\(fileName)_\(fileIndex)"
+            fileURL = documentPath.appending(path: fileName)
             fileIndex += 1
         }
         
@@ -85,7 +79,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             
             timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
                 self.getAudiolevels()
-                self.recordTime = Int(Date().timeIntervalSince1970 - self.startTime)
+                self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
             }
         } catch {
             errorMessage = .startFail
@@ -104,17 +98,18 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
     
     /// 녹음 정지
-    func stopRecord() {
+    func stopRecord() -> (String, Double) {
         audioRecorder?.stop()
         timer?.invalidate()
-        recordTime = 0
+        let length = elapsedTime
         audioLevel = 0.0
+        resetStatus()
         
         if self.audioRecorder != nil {
             fetchData()
-            errorMessage = nil
-            status = .stop
         }
+        
+        return (fileName, length)
     }
     
     /// 녹음 목록 새로고침
@@ -135,24 +130,32 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
-    /// 해당 URL의 녹음 파일 재생 시작
-    func startPlay(fileURLString: String) {
+    /// 해당 파일명의 녹음 파일 재생 시작
+    func startPlay(fileName: String) {
         errorMessage = nil
         
+        guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            errorMessage = .playingFail
+            return
+        }
+        
+        let recordingURL = documentPath.appending(path: fileName)
+        
         // 재생 시작
-        if let recordingURL = URL(string: fileURLString) {
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
-                if let audioPlayer {
-                    audioPlayer.prepareToPlay()
-                    audioPlayer.delegate = self
-                    audioPlayer.play()
-                    status = .play
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+            if let audioPlayer {
+                audioPlayer.prepareToPlay()
+                startTime = Date().timeIntervalSince1970
+                audioPlayer.delegate = self
+                audioPlayer.play()
+                status = .play
+                
+                timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+                    self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
                 }
-            } catch {
-                errorMessage = .playingFail
             }
-        } else {
+        } catch {
             errorMessage = .playingFail
         }
     }
@@ -161,23 +164,30 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func pausePlay() {
         audioPlayer?.pause()
         status = .pause
+        timer?.invalidate()
     }
     
     /// 재생 계속하기
     func resumePlay() {
         audioPlayer?.play()
         status = .play
+        
+        startTime = Date().timeIntervalSince1970 - elapsedTime
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+            self.getAudiolevels()
+            self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
+        }
     }
     
     /// 재생 중단
     func stopPlay() {
         audioPlayer?.stop()
-        errorMessage = nil
-        status = .stop
+        resetStatus()
     }
     
     /// 해당 URL의 녹음 파일 삭제
-    func deleteRecord(fileURLString: String) {
+    func deleteRecord(fileName: String) {
         errorMessage = nil
         
         // 삭제 전 재생 및 녹음 정지
@@ -188,29 +198,30 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer?.stop()
         }
         
-        // 해당 URL의 녹음 파일 지우기, 녹음 URL 목록 삭제
-        if let recordURL = URL(string: fileURLString) {
-            do {
-                try FileManager.default.removeItem(at: recordURL)
-                recordedFiles.removeAll{ $0 == recordURL }
-            } catch {
-                errorMessage = .deleteFail
-            }
-        } else {
-            errorMessage = .playingFail
+        guard let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            errorMessage = .startFail
+            return
+        }
+        
+        let recordURL = documentPath.appending(path: fileName)
+        
+        do {
+            try FileManager.default.removeItem(at: recordURL)
+            recordedFiles.removeAll{ $0 == recordURL }
+        } catch {
+            errorMessage = .deleteFail
         }
     }
     
-    private func dateToString(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
-        
-        return dateFormatter.string(from: date)
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        resetStatus()
     }
     
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    private func resetStatus() {
+        errorMessage = nil
         status = .stop
+        elapsedTime = 0
+        timer?.invalidate()
     }
 }
 
