@@ -30,6 +30,7 @@ struct AnswerRecordingView: View {
                         Text(question.content)
                             .font(.title)
                             .minimumScaleFactor(0.3)
+                            .frame(minHeight: geometry.size.height * 0.25)
                     }
                 }
                 .padding(.bottom, 30)
