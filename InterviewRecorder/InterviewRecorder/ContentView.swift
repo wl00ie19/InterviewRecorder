@@ -87,9 +87,6 @@ struct ContentView: View {
                     Button {
                         selectedQuestion = nil
                         isEditing.toggle()
-                        
-                        recordManager.fetchData()
-                        print(recordManager.recordedFiles)
                     } label: {
                         Label(editButtonText, systemImage: editIconName)
                     }
