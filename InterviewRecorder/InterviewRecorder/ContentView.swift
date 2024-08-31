@@ -87,6 +87,9 @@ struct ContentView: View {
                     Button {
                         selectedQuestion = nil
                         isEditing.toggle()
+                        
+                        recordManager.fetchData()
+                        print(recordManager.recordedFiles)
                     } label: {
                         Label(editButtonText, systemImage: editIconName)
                     }
@@ -107,6 +110,12 @@ struct ContentView: View {
                 switch recordManager.status {
                 case .record:
                     if selectedQuestion != nil {
+                        let (answerURLString, length) = recordManager.stopRecord()
+                        
+                        selectedQuestion?.answerFileName = answerURLString
+                        selectedQuestion?.answerLength = length
+                        selectedQuestion?.lastAnsweredDate = Date()
+                        
                         isShowingSaveAlert.toggle()
                     }
                 case .play, .pause:
@@ -141,18 +150,16 @@ struct ContentView: View {
         }
         .alert("답변을 저장할까요?", isPresented: $isShowingSaveAlert) {
             Button("취소", role: .cancel) {
-                let (_, _) = recordManager.stopRecord()
                 isShowingSaveAlert = false
+                if let fileName = selectedQuestion?.answerFileName {
+                    recordManager.deleteRecord(fileName: fileName)
+                    selectedQuestion?.answerFileName = nil
+                }
+                selectedQuestion = nil
             }
             
-            Button("확인", role: .destructive) {
+            Button("확인") {
                 if let selectedQuestion {
-                    let (answerURLString, length) = recordManager.stopRecord()
-                    
-                    selectedQuestion.answerFileName = answerURLString
-                    selectedQuestion.answerLength = length
-                    selectedQuestion.lastAnsweredDate = Date()
-                    
                     modelContext.insert(selectedQuestion)
                 }
             }
