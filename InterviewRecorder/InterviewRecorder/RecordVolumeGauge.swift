@@ -10,9 +10,7 @@ import SwiftUI
 struct RecordVolumeGauge: View {
     @EnvironmentObject var recordManager: AudioRecordManager
     
-    private var timeText: String {
-        recordManager.second >= 10 ? "\(recordManager.minute):\(recordManager.second)" : "\(recordManager.minute):0\(recordManager.second)"
-    }
+    private let dateConverter = DateConverter.shared
     
     private var isRecording: Bool {
         recordManager.status == .record
@@ -35,7 +33,7 @@ struct RecordVolumeGauge: View {
             }
             
             if isRecording {
-                Label("녹음 중 - \(timeText)", systemImage: "mic.circle.fill")
+                Label("녹음 중 - \(dateConverter.toTimeString(elapsedTime: recordManager.elapsedTime))", systemImage: "mic.circle.fill")
                     .lineLimit(1)
                     .minimumScaleFactor(0.3)
                     .foregroundStyle(.background)

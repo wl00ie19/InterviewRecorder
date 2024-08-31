@@ -13,12 +13,10 @@ struct AnswerRecordingView: View {
     @EnvironmentObject var recordManager: AudioRecordManager
     @State var question: Question
     
+    private let dateConverter = DateConverter.shared
+    
     private var isRecording: Bool {
         recordManager.status == .record
-    }
-    
-    private var timeText: String {
-        recordManager.second >= 10 ? "\(recordManager.minute):\(recordManager.second)" : "\(recordManager.minute):0\(recordManager.second)"
     }
     
     var body: some View {
@@ -55,13 +53,17 @@ struct AnswerRecordingView: View {
                         GeometryReader { geometry in
                             ZStack(alignment: .leading) {
                                 Rectangle()
-                                    .foregroundStyle(recordManager.status == .play ? Color.nowPlaying : Color.playButton)
+                                    .foregroundStyle(Color.playButton)
                                     .frame(width: geometry.size.width)
+                                
+                                Rectangle()
+                                    .foregroundStyle(Color.nowPlaying)
+                                    .frame(width: geometry.size.width * (recordManager.elapsedTime / (question.answerLength ?? 1)))
                             }
                         }
                         
                         if recordManager.status == .play {
-                            Text("재생 중 - \(timeText)")
+                            Text("재생 중 - \(dateConverter.toTimeString(elapsedTime: recordManager.elapsedTime)) / \(dateConverter.toTimeString(elapsedTime: question.answerLength ?? 0))")
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.3)
                                 .foregroundStyle(.background)

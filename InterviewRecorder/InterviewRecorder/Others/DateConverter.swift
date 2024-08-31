@@ -27,4 +27,11 @@ class DateConverter {
         
         return dateFormatter.string(from: date)
     }
+    
+    func toTimeString(elapsedTime: Double) -> String {
+        let minute = Int(elapsedTime / 60)
+        let second = Int(elapsedTime) % 60
+        
+        return second >= 10 ? "\(minute):\(second)" : "\(minute):0\(second)"
+    }
 }

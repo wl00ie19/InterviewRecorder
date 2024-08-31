@@ -30,16 +30,6 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     /// 녹음 진행 시간
     @Published var elapsedTime: Double = 0
     
-    /// 녹음 진행 시간(분)
-    var minute: Int {
-        Int(elapsedTime / 60)
-    }
-    
-    /// 녹음 진행 시간(초)
-    var second: Int {
-        Int(elapsedTime) % 60
-    }
-    
     /// 녹음 시작 - 질문 ID 필요
     func startRecord(questionID: String) {
         let session = AVAudioSession.sharedInstance()
@@ -162,7 +152,6 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
                 status = .play
                 
                 timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
-                    self.getAudiolevels()
                     self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
                 }
             }
