@@ -21,9 +21,9 @@ struct NewQuestionView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 20) {
                 Text("새로운 질문을 입력하세요.")
-                    .font(.title2)
+                    .font(.title3)
                 
                 QuestionEditor(content: $content)
                     .focused($focused)
