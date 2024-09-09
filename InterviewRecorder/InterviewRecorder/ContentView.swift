@@ -27,6 +27,10 @@ struct ContentView: View {
     
     @State private var selectedQuestion: Question?
     
+    @State private var tempAnswerFileName: String?
+    
+    @State private var tempAnswerLength: Double?
+    
     var editButtonText: String {
         isEditing ? "완료" : "삭제"
     }
@@ -98,7 +102,7 @@ struct ContentView: View {
             }
             .navigationDestination(isPresented: $isShowingRecordAnswer) {
                 if let selectedQuestion {
-                    AnswerRecordingView(question: selectedQuestion)
+                    AnswerRecordingView(question: selectedQuestion, tempAnswerFileName: $tempAnswerFileName, tempAnswerLength: $tempAnswerLength)
                 }
             }
         }
