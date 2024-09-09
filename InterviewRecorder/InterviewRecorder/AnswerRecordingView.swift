@@ -38,7 +38,7 @@ struct AnswerRecordingView: View {
                             .font(.headline)
                         
                         Text(question.content)
-                            .font(.title)
+                            .font(.title.monospaced())
                             .minimumScaleFactor(0.3)
                             .frame(minHeight: geometry.size.height * 0.25)
                     }

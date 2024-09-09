@@ -50,7 +50,7 @@ struct ContentView: View {
                                     .font(.headline)
                                 
                                 Text("EnvironmentObject는 무엇이고 어떤 경우 사용할까요?")
-                                    .font(.title)
+                                    .font(.title.monospaced())
                                 
                                 ColorButton(title: "답변하기", buttonColor: .blue, textColor: Color(uiColor: .systemBackground), isDisabled: isEditing) {
                                     

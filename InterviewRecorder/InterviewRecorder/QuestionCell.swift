@@ -21,6 +21,7 @@ struct QuestionCell: View {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .foregroundStyle(configuration.isPressed ? Color(uiColor: .systemBackground) : .primary)
+                .fontDesign(.monospaced)
                 .background {
                     GeometryReader { geometry in
                         Rectangle()

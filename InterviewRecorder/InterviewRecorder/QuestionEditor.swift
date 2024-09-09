@@ -15,7 +15,7 @@ struct QuestionEditor: View {
     var body: some View {
         TextEditor(text: $content)
             .focused($focused)
-            .font(.title3)
+            .font(.title3.monospaced())
             .padding(10)
             .background {
                 RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
