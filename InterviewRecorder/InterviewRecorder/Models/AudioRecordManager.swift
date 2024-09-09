@@ -32,6 +32,8 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     /// 녹음 시작 - 질문 ID 필요
     func startRecord(questionID: String) {
+        stopPlay()
+        
         let session = AVAudioSession.sharedInstance()
         errorMessage = nil
         
