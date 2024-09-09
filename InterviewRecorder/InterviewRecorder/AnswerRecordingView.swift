@@ -101,9 +101,6 @@ struct AnswerRecordingView: View {
                 tempAnswerLength = nil
                 tempAnswerFileName = nil
                 isShowingRerecordAlert = false
-                
-                recordManager.fetchData()
-                print(recordManager.recordedFiles)
             }
             
             Button("확인") {
@@ -122,7 +119,7 @@ struct AnswerRecordingView: View {
                 isShowingRerecordAlert = false
             }
         } message: {
-            Text("답변이 지금 녹음한 내용으로 변경되고, 이전에 녹음된 내용은 삭제됩니다. ")
+            Text("답변이 지금 녹음한 내용으로 변경되며, 이전에 녹음된 내용은 삭제됩니다.")
         }
     }
 }
