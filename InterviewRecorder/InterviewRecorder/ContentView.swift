@@ -27,6 +27,10 @@ struct ContentView: View {
     
     @State private var selectedQuestion: Question?
     
+    @State private var tempAnswerFileName: String?
+    
+    @State private var tempAnswerLength: Double?
+    
     var editButtonText: String {
         isEditing ? "완료" : "삭제"
     }
@@ -98,7 +102,7 @@ struct ContentView: View {
             }
             .navigationDestination(isPresented: $isShowingRecordAnswer) {
                 if let selectedQuestion {
-                    AnswerRecordingView(question: selectedQuestion)
+                    AnswerRecordingView(question: selectedQuestion, tempAnswerFileName: $tempAnswerFileName, tempAnswerLength: $tempAnswerLength)
                 }
             }
         }
@@ -107,12 +111,7 @@ struct ContentView: View {
                 switch recordManager.status {
                 case .record:
                     if selectedQuestion != nil {
-                        let (answerURLString, length) = recordManager.stopRecord()
-                        
-                        selectedQuestion?.answerFileName = answerURLString
-                        selectedQuestion?.answerLength = length
-                        selectedQuestion?.lastAnsweredDate = Date()
-                        
+                        (tempAnswerFileName, tempAnswerLength) = recordManager.stopRecord()
                         isShowingSaveAlert.toggle()
                     }
                 case .play, .pause:
@@ -147,21 +146,37 @@ struct ContentView: View {
         }
         .alert("답변을 저장할까요?", isPresented: $isShowingSaveAlert) {
             Button("취소", role: .cancel) {
-                isShowingSaveAlert = false
-                if let fileName = selectedQuestion?.answerFileName {
-                    recordManager.deleteRecord(fileName: fileName)
-                    selectedQuestion?.answerFileName = nil
+                if let tempAnswerFileName {
+                    recordManager.deleteRecord(fileName: tempAnswerFileName)
                 }
                 selectedQuestion = nil
+                tempAnswerFileName = nil
+                tempAnswerLength = nil
+                
+                isShowingSaveAlert = false
             }
             
             Button("확인") {
-                if let selectedQuestion {
+                if let selectedQuestion, let tempAnswerFileName, let tempAnswerLength {
+                    if let fileName = selectedQuestion.answerFileName {
+                        recordManager.deleteRecord(fileName: fileName)
+                    }
+                    
+                    selectedQuestion.answerFileName = tempAnswerFileName
+                    selectedQuestion.answerLength = tempAnswerLength
+                    selectedQuestion.lastAnsweredDate = Date()
+                    
                     modelContext.insert(selectedQuestion)
                 }
+                
+                selectedQuestion = nil
+                tempAnswerFileName = nil
+                tempAnswerLength = nil
+                
+                isShowingSaveAlert = false
             }
         } message: {
-            Text(selectedQuestion?.isAnswered ?? false ? "한번 삭제된 질문은 복구할 수 없으며, 녹음된 답변도 같이 삭제됩니다." : "한번 삭제된 질문은 복구할 수 없습니다.")
+            Text(selectedQuestion?.isAnswered ?? false ? "답변이 지금 녹음한 내용으로 변경되며, 이전에 녹음된 내용은 삭제됩니다." : "저장하지 않으면 지금 녹음한 내용은 삭제됩니다.")
         }
     }
 }

@@ -13,10 +13,20 @@ struct AnswerRecordingView: View {
     @EnvironmentObject var recordManager: AudioRecordManager
     @State var question: Question
     
+    @State var isShowingRerecordAlert: Bool = false
+    
+    @Binding var tempAnswerFileName: String?
+    
+    @Binding var tempAnswerLength: Double?
+    
     private let dateConverter = DateConverter.shared
     
     private var isRecording: Bool {
         recordManager.status == .record
+    }
+    
+    private var recordText: String {
+        isRecording ? "정지" : question.isAnswered ? "다시 녹음하기" : "녹음하기"
     }
     
     var body: some View {
@@ -35,7 +45,7 @@ struct AnswerRecordingView: View {
                 }
                 .padding(.bottom, 30)
                 
-                if question.isAnswered {
+                if question.isAnswered && !isRecording {
                     PlayButton(question: $question) {
                         switch recordManager.status {
                         case .stop:
@@ -57,25 +67,59 @@ struct AnswerRecordingView: View {
                         .frame(height: 80)
                 }
                 
-                ColorButton(title: isRecording ? "정지" : "녹음하기" , buttonColor: isRecording ? .nowRecording : .recordButton, textColor: Color(uiColor: .systemBackground)) {
+                ColorButton(title: recordText , buttonColor: isRecording ? .nowRecording : .recordButton, textColor: Color(uiColor: .systemBackground)) {
                     if isRecording {
-                        let (answerURLString, length) = recordManager.stopRecord()
+                        (tempAnswerFileName, tempAnswerLength) = recordManager.stopRecord()
                         
-                        question.answerFileName = answerURLString
-                        question.answerLength = length
-                        question.lastAnsweredDate = Date()
-                        
-                        modelContext.insert(question)
+                        if question.isAnswered {
+                            isShowingRerecordAlert.toggle()
+                        } else {
+                            if let tempAnswerFileName, let tempAnswerLength {
+                                question.answerFileName = tempAnswerFileName
+                                question.answerLength = tempAnswerLength
+                                question.lastAnsweredDate = Date()
+                                
+                                modelContext.insert(question)
+                            }
+                        }
                     } else {
                         recordManager.startRecord(questionID: question.id)
                     }
                 }
-                .disabled(question.isAnswered)
                 
                 Spacer()
             }
             .padding(10)
         }
         .toolbarTitleDisplayMode(.inline)
+        .alert("답변을 저장할까요?", isPresented: $isShowingRerecordAlert) {
+            Button("취소", role: .cancel) {
+                if let tempAnswerFileName {
+                    recordManager.deleteRecord(fileName: tempAnswerFileName)
+                }
+                
+                tempAnswerLength = nil
+                tempAnswerFileName = nil
+                isShowingRerecordAlert = false
+            }
+            
+            Button("확인") {
+                if let tempAnswerFileName, let tempAnswerLength {
+                    if let answerFileName = question.answerFileName {
+                        recordManager.deleteRecord(fileName: answerFileName)
+                    }
+                    
+                    question.answerFileName = tempAnswerFileName
+                    question.answerLength = tempAnswerLength
+                    question.lastAnsweredDate = Date()
+                    
+                    modelContext.insert(question)
+                }
+                
+                isShowingRerecordAlert = false
+            }
+        } message: {
+            Text("답변이 지금 녹음한 내용으로 변경되며, 이전에 녹음된 내용은 삭제됩니다.")
+        }
     }
 }
