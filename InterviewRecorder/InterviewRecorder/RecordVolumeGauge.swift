@@ -36,13 +36,13 @@ struct RecordVolumeGauge: View {
                 Label("녹음 중 - \(dateConverter.toTimeString(elapsedTime: recordManager.elapsedTime))", systemImage: "mic.circle.fill")
                     .lineLimit(1)
                     .minimumScaleFactor(0.3)
-                    .foregroundStyle(.background)
+                    .foregroundStyle(.white)
                     .font(.title2)
             } else {
                 Text("답변하지 않은 질문입니다.")
                     .lineLimit(1)
                     .minimumScaleFactor(0.3)
-                    .foregroundStyle(.background)
+                    .foregroundStyle(.white)
                     .font(.title2)
             }
         }

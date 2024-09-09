@@ -67,7 +67,7 @@ struct AnswerRecordingView: View {
                         .frame(height: 80)
                 }
                 
-                ColorButton(title: recordText , buttonColor: isRecording ? .nowRecording : .recordButton, textColor: Color(uiColor: .systemBackground)) {
+                ColorButton(title: recordText , buttonColor: isRecording ? .nowRecording : .recordButton, textColor: .white) {
                     if isRecording {
                         (tempAnswerFileName, tempAnswerLength) = recordManager.stopRecord()
                         

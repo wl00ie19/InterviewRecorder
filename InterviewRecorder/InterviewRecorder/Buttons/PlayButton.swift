@@ -69,7 +69,7 @@ struct PlayButton: View {
                 }
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
-                .foregroundStyle(.background)
+                .foregroundStyle(.white)
             }
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
         }
