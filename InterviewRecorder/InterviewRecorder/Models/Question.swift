@@ -11,13 +11,13 @@ import SwiftData
 @Model
 class Question: Identifiable {
     /// 질문 ID
-    let id: String
+    private(set) var id: String
     
     /// 질문 내용
     var content: String
     
     /// 질문 등록 일자
-    let questionDate: Date
+    private(set) var questionDate: Date
     
     /// 답변 녹음 파일명
     var answerFileName: String?
