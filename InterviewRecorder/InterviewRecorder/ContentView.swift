@@ -39,21 +39,31 @@ struct ContentView: View {
         isEditing ? "checkmark" : "trash"
     }
     
+    var randomQuestion: Question? {
+        let filtered = questions.filter{ $0.isAnswered == false }
+        
+        return filtered.isEmpty ? nil : filtered.randomElement()
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     VStack(spacing: 10) {
-                        if !questions.isEmpty {
+                        if let randomQuestion {
                             VStack(spacing: 30) {
                                 Text("답변하지 않은 질문")
                                     .font(.headline)
                                 
-                                Text("EnvironmentObject는 무엇이고 어떤 경우 사용할까요?")
+                                Text(randomQuestion.content)
                                     .font(.title.monospaced())
                                 
                                 ColorButton(title: "답변하기", buttonColor: .blue, textColor: .white, isDisabled: isEditing) {
+                                    selectedQuestion = randomQuestion
                                     
+                                    if selectedQuestion != nil {
+                                        isShowingRecordAnswer.toggle()
+                                    }
                                 }
                             }
                             .padding(10)
