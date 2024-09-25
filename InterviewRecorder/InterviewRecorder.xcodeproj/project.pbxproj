@@ -23,6 +23,7 @@
 		9B7662FC2C6DAD0300A41D3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B7662FB2C6DAD0300A41D3D /* Preview Assets.xcassets */; };
 		9B7663032C6DED9100A41D3D /* AudioRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7663022C6DED9100A41D3D /* AudioRecordManager.swift */; };
 		9B7663052C6DEE8F00A41D3D /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7663042C6DEE8F00A41D3D /* Question.swift */; };
+		9BD00AF92CA417080043463E /* EditQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD00AF82CA417080043463E /* EditQuestionView.swift */; };
 		9BDF04812C74914000448EF0 /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDF04802C74914000448EF0 /* ColorButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		9B7662FB2C6DAD0300A41D3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9B7663022C6DED9100A41D3D /* AudioRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordManager.swift; sourceTree = "<group>"; };
 		9B7663042C6DEE8F00A41D3D /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		9BD00AF82CA417080043463E /* EditQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditQuestionView.swift; sourceTree = "<group>"; };
 		9BDF04802C74914000448EF0 /* ColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,7 @@
 				9B75EF5D2C6F70AE00BCF344 /* NewQuestionView.swift */,
 				9B7358562C7C7A6200126144 /* QuestionEditor.swift */,
 				9B4378D32C80126000908BFC /* AnswerRecordingView.swift */,
+				9BD00AF82CA417080043463E /* EditQuestionView.swift */,
 				9B5807A82C806C9E005EA8C2 /* RecordVolumeGauge.swift */,
 				9B22608D2C7D71ED009C51B6 /* Buttons */,
 				9B7663062C6DEE9700A41D3D /* Models */,
@@ -210,6 +213,7 @@
 				9B4378D62C801E8400908BFC /* PlayButton.swift in Sources */,
 				9B4378D82C80221300908BFC /* CustomButtonStyle.swift in Sources */,
 				9BDF04812C74914000448EF0 /* ColorButton.swift in Sources */,
+				9BD00AF92CA417080043463E /* EditQuestionView.swift in Sources */,
 				9B22608C2C7D7062009C51B6 /* DeleteButton.swift in Sources */,
 				9B2260892C7D62CC009C51B6 /* QuestionCell.swift in Sources */,
 				9B7662F72C6DAD0200A41D3D /* ContentView.swift in Sources */,
