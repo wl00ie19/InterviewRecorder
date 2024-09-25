@@ -13,7 +13,7 @@ struct AnswerRecordingView: View {
     @EnvironmentObject var recordManager: AudioRecordManager
     @State var question: Question
     
-    @State var isShowingRerecordAlert: Bool = false
+    @State private var isShowingRerecordAlert: Bool = false
     
     @Binding var tempAnswerFileName: String?
     
