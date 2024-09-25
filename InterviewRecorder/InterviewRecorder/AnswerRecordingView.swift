@@ -15,6 +15,8 @@ struct AnswerRecordingView: View {
     
     @State private var isShowingRerecordAlert: Bool = false
     
+    @State private var isShowingEditSheet: Bool = false
+    
     @Binding var tempAnswerFileName: String?
     
     @Binding var tempAnswerLength: Double?
@@ -95,7 +97,7 @@ struct AnswerRecordingView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    
+                    isShowingEditSheet.toggle()
                 } label: {
                     Label("질문 수정", systemImage: "pencil.line")
                 }
@@ -129,6 +131,9 @@ struct AnswerRecordingView: View {
             }
         } message: {
             Text("답변이 지금 녹음한 내용으로 변경되며, 이전에 녹음된 내용은 삭제됩니다.")
+        }
+        .sheet(isPresented: $isShowingEditSheet) {
+            EditQuestionView(question: $question)
         }
     }
 }

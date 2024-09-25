@@ -9,39 +9,47 @@ import SwiftUI
 import SwiftData
 
 struct EditQuestionView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    @Binding var question: Question
+    
     @FocusState private var focused: Bool
     
-    @Binding var isShowingNewQuestion: Bool
-    
-    @State private var newContent: String = ""
-    
     var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 20) {
-                Text("수정할 질문 내용을 입력하세요.")
-                    .font(.title3)
-                
-                QuestionEditor(content: $newContent)
-                    .focused($focused)
-                    .frame(height: geometry.size.height * 0.4)
-                
-                ColorButton(title: "수정", buttonColor: .blue, textColor: Color(uiColor: .systemBackground), isDisabled: newContent.isEmpty) {
+        NavigationStack {
+            GeometryReader { geometry in
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("수정할 질문 내용을 입력하세요.")
+                        .font(.title3)
                     
+                    QuestionEditor(content: $question.content)
+                        .focused($focused)
+                        .frame(height: geometry.size.height * 0.4)
+                    
+                    
+                    Spacer()
                 }
-                
-                Spacer()
-            }
-            .background {
-                Rectangle()
-                    .ignoresSafeArea()
-                    .foregroundStyle(.background)
-                    .onTapGesture {
-                        focused = false
+                .background {
+                    Rectangle()
+                        .ignoresSafeArea()
+                        .foregroundStyle(.background)
+                        .onTapGesture {
+                            focused = false
+                        }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("완료")
+                        }
                     }
+                }
+                .navigationTitle("질문 내용 수정")
+                .navigationBarTitleDisplayMode(.inline)
+                .padding(10)
             }
-            .navigationTitle("질문 내용 수정")
-            .navigationBarTitleDisplayMode(.inline)
-            .padding(10)
         }
     }
 }
