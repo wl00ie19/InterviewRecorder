@@ -92,6 +92,15 @@ struct AnswerRecordingView: View {
             .padding(10)
         }
         .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    
+                } label: {
+                    Label("질문 수정", systemImage: "pencil.line")
+                }
+            }
+        }
         .alert("답변을 저장할까요?", isPresented: $isShowingRerecordAlert) {
             Button("취소", role: .cancel) {
                 if let tempAnswerFileName {
