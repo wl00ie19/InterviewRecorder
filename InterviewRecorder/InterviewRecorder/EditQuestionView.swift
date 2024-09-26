@@ -13,6 +13,8 @@ struct EditQuestionView: View {
     
     @Binding var question: Question
     
+    @State private var initialContent: String = ""
+    
     @FocusState private var focused: Bool
     
     var body: some View {
@@ -26,6 +28,20 @@ struct EditQuestionView: View {
                         .focused($focused)
                         .frame(height: geometry.size.height * 0.4)
                     
+                    if question.content != initialContent {
+                        Button {
+                            question.content = initialContent
+                        } label: {
+                            Label("되돌리기", systemImage: "arrow.uturn.backward")
+                                .foregroundStyle(.white)
+                                .padding(10)
+                                .background {
+                                    RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                        .foregroundStyle(.blue)
+                                }
+                        }
+                        .buttonStyle(CustomButtonStyle())
+                    }
                     
                     Spacer()
                 }
@@ -50,6 +66,9 @@ struct EditQuestionView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .padding(10)
             }
+        }
+        .onAppear {
+            initialContent = question.content
         }
     }
 }
