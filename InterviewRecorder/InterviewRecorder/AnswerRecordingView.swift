@@ -13,7 +13,9 @@ struct AnswerRecordingView: View {
     @EnvironmentObject var recordManager: AudioRecordManager
     @State var question: Question
     
-    @State var isShowingRerecordAlert: Bool = false
+    @State private var isShowingRerecordAlert: Bool = false
+    
+    @State private var isShowingEditSheet: Bool = false
     
     @Binding var tempAnswerFileName: String?
     
@@ -92,6 +94,15 @@ struct AnswerRecordingView: View {
             .padding(10)
         }
         .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isShowingEditSheet.toggle()
+                } label: {
+                    Label("질문 수정", systemImage: "pencil.line")
+                }
+            }
+        }
         .alert("답변을 저장할까요?", isPresented: $isShowingRerecordAlert) {
             Button("취소", role: .cancel) {
                 if let tempAnswerFileName {
@@ -120,6 +131,9 @@ struct AnswerRecordingView: View {
             }
         } message: {
             Text("답변이 지금 녹음한 내용으로 변경되며, 이전에 녹음된 내용은 삭제됩니다.")
+        }
+        .sheet(isPresented: $isShowingEditSheet) {
+            EditQuestionView(question: $question)
         }
     }
 }
