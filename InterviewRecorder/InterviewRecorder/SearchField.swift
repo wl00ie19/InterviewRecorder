@@ -16,7 +16,6 @@ struct SearchField: View {
         VStack(alignment: .leading) {
             TextField("검색", text: $searchText)
                 .focused($focused)
-                .font(.title3)
             
             Rectangle()
                 .frame(height: 2)
