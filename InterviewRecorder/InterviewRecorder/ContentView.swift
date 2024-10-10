@@ -35,6 +35,10 @@ struct ContentView: View {
     
     @State private var searchText: String = ""
     
+    private var filteredQuestions: [Question] {
+        searchText.isEmpty ? questions : questions.filter{ $0.content.contains(searchText) }
+    }
+    
     var editButtonText: String {
         isEditing ? "완료" : "삭제"
     }
@@ -87,7 +91,7 @@ struct ContentView: View {
                     }
                     .padding(10)
                     
-                    ForEach(questions) { question in
+                    ForEach(filteredQuestions) { question in
                         QuestionCell(title: question.content, isEditing: $isEditing) {
                             selectedQuestion = question
                             
