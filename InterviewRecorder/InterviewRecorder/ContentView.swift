@@ -15,6 +15,8 @@ struct ContentView: View {
     
     @EnvironmentObject var recordManager: AudioRecordManager
     
+    @FocusState private var focused: Bool
+    
     @State private var isShowingRecordAnswer: Bool = false
     
     @State private var isShowingNewQuestion: Bool = false
@@ -30,6 +32,8 @@ struct ContentView: View {
     @State private var tempAnswerFileName: String?
     
     @State private var tempAnswerLength: Double?
+    
+    @State private var searchText: String = ""
     
     var editButtonText: String {
         isEditing ? "완료" : "삭제"
@@ -50,6 +54,9 @@ struct ContentView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     VStack(spacing: 10) {
+                        SearchField(searchText: $searchText)
+                            .focused($focused)
+                        
                         if let randomQuestion {
                             VStack(spacing: 30) {
                                 Text("답변하지 않은 질문")
@@ -94,6 +101,14 @@ struct ContentView: View {
                     }
                 }
                 .padding(.vertical, 10)
+                .background {
+                    Rectangle()
+                        .ignoresSafeArea()
+                        .foregroundStyle(.background)
+                        .onTapGesture {
+                            focused = false
+                        }
+                }
             }
             .navigationTitle("전체 답변 목록")
             .toolbar {
