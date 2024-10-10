@@ -35,6 +35,8 @@ struct ContentView: View {
     
     @State private var searchText: String = ""
     
+    @State var randomQuestion: Question?
+    
     private var filteredQuestions: [Question] {
         searchText.isEmpty ? questions : questions.filter{ $0.content.contains(searchText) }
     }
@@ -45,12 +47,6 @@ struct ContentView: View {
     
     var editIconName: String {
         isEditing ? "checkmark" : "trash"
-    }
-    
-    var randomQuestion: Question? {
-        let filtered = questions.filter{ $0.isAnswered == false }
-        
-        return filtered.isEmpty ? nil : filtered.randomElement()
     }
     
     var body: some View {
@@ -134,6 +130,9 @@ struct ContentView: View {
                     AnswerRecordingView(question: selectedQuestion, tempAnswerFileName: $tempAnswerFileName, tempAnswerLength: $tempAnswerLength)
                 }
             }
+        }
+        .onAppear {
+            randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
         }
         .onChange(of: $isShowingRecordAnswer.wrappedValue) {
             if !isShowingRecordAnswer {
