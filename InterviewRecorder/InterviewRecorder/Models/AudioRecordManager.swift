@@ -38,7 +38,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         errorMessage = nil
         
         do {
-            try session.setCategory(.playAndRecord, mode: .default)
+            try session.setCategory(.record, mode: .default)
             try session.setActive(true)
         } catch {
             errorMessage = .startFail
@@ -143,9 +143,15 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         
         let recordingURL = documentPath.appending(path: fileName)
         
+        let session = AVAudioSession.sharedInstance()
+        
         // 재생 시작
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+            
+            try session.setCategory(.playback, mode: .default)
+            try session.setActive(true)
+            
             if let audioPlayer {
                 audioPlayer.prepareToPlay()
                 startTime = Date().timeIntervalSince1970
