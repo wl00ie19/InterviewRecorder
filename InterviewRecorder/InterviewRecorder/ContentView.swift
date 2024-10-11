@@ -35,10 +35,16 @@ struct ContentView: View {
     
     @State private var searchText: String = ""
     
-    @State var randomQuestion: Question?
+    @State private var isUnansweredOnly: Bool = false
+    
+    @State private var randomQuestion: Question?
     
     private var filteredQuestions: [Question] {
-        searchText.isEmpty ? questions : questions.filter{ $0.content.contains(searchText) }
+        if isUnansweredOnly {
+            searchText.isEmpty ? questions.filter{ $0.isAnswered == true }: questions.filter{ $0.content.contains(searchText) && $0.isAnswered == true }
+        } else {
+            searchText.isEmpty ? questions : questions.filter{ $0.content.contains(searchText) }
+        }
     }
     
     var editButtonText: String {
@@ -54,7 +60,7 @@ struct ContentView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     VStack(spacing: 10) {
-                        SearchField(searchText: $searchText)
+                        SearchField(searchText: $searchText, isUnansweredOnly: $isUnansweredOnly)
                             .focused($focused)
                         
                         if let randomQuestion {

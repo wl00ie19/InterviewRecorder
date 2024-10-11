@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchField: View {
     @Binding var searchText: String
     
-    @State var isUnansweredOnly: Bool = false
+    @Binding var isUnansweredOnly: Bool
     
     @FocusState private var focused: Bool
     
