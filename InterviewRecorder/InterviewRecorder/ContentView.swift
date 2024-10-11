@@ -49,19 +49,19 @@ struct ContentView: View {
         }
     }
     
-    var editButtonText: String {
+    private var editButtonText: String {
         isEditing ? "완료" : "삭제"
     }
     
-    var editIconName: String {
+    private var editIconName: String {
         isEditing ? "checkmark" : "trash"
     }
     
-    var searchButtonText: String {
+    private var searchButtonText: String {
         isSearchDisplaying ? "검색창 닫기" : "검색"
     }
     
-    var searchIconName: String {
+    private var searchIconName: String {
         isSearchDisplaying ? "xmark" : "magnifyingglass"
     }
     
@@ -164,8 +164,13 @@ struct ContentView: View {
         .onAppear {
             randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
         }
+        .onChange(of: $isShowingNewQuestion.wrappedValue) {
+            randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
+        }
         .onChange(of: $isShowingRecordAnswer.wrappedValue) {
             if !isShowingRecordAnswer {
+                randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
+                
                 switch recordManager.status {
                 case .record:
                     if selectedQuestion != nil {
@@ -193,6 +198,8 @@ struct ContentView: View {
                         isEditing = false
                     }
                     modelContext.delete(selectedQuestion)
+                    
+                    randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
                 }
                 isShowingDeleteAlert = false
                 if questions.isEmpty {
@@ -230,6 +237,8 @@ struct ContentView: View {
                 selectedQuestion = nil
                 tempAnswerFileName = nil
                 tempAnswerLength = nil
+                
+                randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
                 
                 isShowingSaveAlert = false
             }
