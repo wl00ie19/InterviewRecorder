@@ -49,12 +49,20 @@ struct ContentView: View {
         }
     }
     
-    var editButtonText: String {
+    private var editButtonText: String {
         isEditing ? "완료" : "삭제"
     }
     
-    var editIconName: String {
+    private var editIconName: String {
         isEditing ? "checkmark" : "trash"
+    }
+    
+    private var searchButtonText: String {
+        isSearchDisplaying ? "검색창 닫기" : "검색"
+    }
+    
+    private var searchIconName: String {
+        isSearchDisplaying ? "xmark" : "magnifyingglass"
     }
     
     var body: some View {
@@ -67,7 +75,7 @@ struct ContentView: View {
                                 .focused($focused)
                         }
                         
-                        if let randomQuestion, searchText.isEmpty {
+                        if let randomQuestion, searchText.isEmpty && !isUnansweredOnly {
                             VStack(spacing: 30) {
                                 Text("답변하지 않은 질문")
                                     .font(.headline)
@@ -135,11 +143,12 @@ struct ContentView: View {
                     Button {
                         if isSearchDisplaying {
                             searchText = ""
+                            isUnansweredOnly = false
                         }
                         
                         isSearchDisplaying.toggle()
                     } label: {
-                        Label("검색", systemImage: "magnifyingglass")
+                        Label(searchButtonText, systemImage: searchIconName)
                     }
                 }
             }
@@ -155,8 +164,13 @@ struct ContentView: View {
         .onAppear {
             randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
         }
+        .onChange(of: $isShowingNewQuestion.wrappedValue) {
+            randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
+        }
         .onChange(of: $isShowingRecordAnswer.wrappedValue) {
             if !isShowingRecordAnswer {
+                randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
+                
                 switch recordManager.status {
                 case .record:
                     if selectedQuestion != nil {
@@ -184,6 +198,8 @@ struct ContentView: View {
                         isEditing = false
                     }
                     modelContext.delete(selectedQuestion)
+                    
+                    randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
                 }
                 isShowingDeleteAlert = false
                 if questions.isEmpty {
@@ -221,6 +237,8 @@ struct ContentView: View {
                 selectedQuestion = nil
                 tempAnswerFileName = nil
                 tempAnswerLength = nil
+                
+                randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
                 
                 isShowingSaveAlert = false
             }
