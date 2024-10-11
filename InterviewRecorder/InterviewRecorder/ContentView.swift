@@ -57,6 +57,14 @@ struct ContentView: View {
         isEditing ? "checkmark" : "trash"
     }
     
+    var searchButtonText: String {
+        isSearchDisplaying ? "검색창 닫기" : "검색"
+    }
+    
+    var searchIconName: String {
+        isSearchDisplaying ? "xmark" : "magnifyingglass"
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -140,7 +148,7 @@ struct ContentView: View {
                         
                         isSearchDisplaying.toggle()
                     } label: {
-                        Label("검색", systemImage: "magnifyingglass")
+                        Label(searchButtonText, systemImage: searchIconName)
                     }
                 }
             }
