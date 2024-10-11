@@ -79,7 +79,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioRecorder?.record()
             status = .record
             
-            timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
                 self.getAudiolevels()
                 self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
             }
@@ -159,7 +159,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
                 audioPlayer.play()
                 status = .play
                 
-                timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+                timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
                     self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
                 }
             }
@@ -182,7 +182,7 @@ class AudioRecordManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         
         startTime = Date().timeIntervalSince1970 - elapsedTime
         
-        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
             self.getAudiolevels()
             self.elapsedTime = Date().timeIntervalSince1970 - self.startTime
         }

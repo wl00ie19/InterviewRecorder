@@ -59,6 +59,7 @@ struct PlayButton: View {
                             .foregroundStyle(Color.nowPlaying)
                             .frame(width: geometry.size.width * (recordManager.elapsedTime / (question.answerLength ?? 1)))
                     }
+                    .animation(.linear, value: recordManager.elapsedTime)
                 }
                 
                 VStack {

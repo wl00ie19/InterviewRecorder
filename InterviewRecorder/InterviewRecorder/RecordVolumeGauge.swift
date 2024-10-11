@@ -30,6 +30,7 @@ struct RecordVolumeGauge: View {
                             .frame(width: geometry.size.width * recordManager.audioLevel)
                     }
                 }
+                .animation(.linear, value: recordManager.elapsedTime)
             }
             
             if isRecording {
