@@ -67,7 +67,7 @@ struct ContentView: View {
                                 .focused($focused)
                         }
                         
-                        if let randomQuestion, searchText.isEmpty {
+                        if let randomQuestion, searchText.isEmpty && !isUnansweredOnly {
                             VStack(spacing: 30) {
                                 Text("답변하지 않은 질문")
                                     .font(.headline)
@@ -135,6 +135,7 @@ struct ContentView: View {
                     Button {
                         if isSearchDisplaying {
                             searchText = ""
+                            isUnansweredOnly = false
                         }
                         
                         isSearchDisplaying.toggle()
