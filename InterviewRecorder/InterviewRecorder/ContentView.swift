@@ -37,6 +37,8 @@ struct ContentView: View {
     
     @State private var isUnansweredOnly: Bool = false
     
+    @State private var isSearchDisplaying: Bool = false
+    
     @State private var randomQuestion: Question?
     
     private var filteredQuestions: [Question] {
@@ -60,10 +62,12 @@ struct ContentView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     VStack(spacing: 10) {
-                        SearchField(searchText: $searchText, isUnansweredOnly: $isUnansweredOnly)
-                            .focused($focused)
+                        if isSearchDisplaying {
+                            SearchField(searchText: $searchText, isUnansweredOnly: $isUnansweredOnly)
+                                .focused($focused)
+                        }
                         
-                        if let randomQuestion {
+                        if let randomQuestion, searchText.isEmpty {
                             VStack(spacing: 30) {
                                 Text("답변하지 않은 질문")
                                     .font(.headline)
@@ -118,7 +122,7 @@ struct ContentView: View {
             }
             .navigationTitle("전체 답변 목록")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button {
                         selectedQuestion = nil
                         isEditing.toggle()
@@ -126,6 +130,17 @@ struct ContentView: View {
                         Label(editButtonText, systemImage: editIconName)
                     }
                     .disabled(questions.isEmpty)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if isSearchDisplaying {
+                            searchText = ""
+                        }
+                        
+                        isSearchDisplaying.toggle()
+                    } label: {
+                        Label("검색", systemImage: "magnifyingglass")
+                    }
                 }
             }
             .navigationDestination(isPresented: $isShowingNewQuestion) {
