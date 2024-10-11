@@ -15,6 +15,8 @@ struct ContentView: View {
     
     @EnvironmentObject var recordManager: AudioRecordManager
     
+    @FocusState private var focused: Bool
+    
     @State private var isShowingRecordAnswer: Bool = false
     
     @State private var isShowingNewQuestion: Bool = false
@@ -31,6 +33,22 @@ struct ContentView: View {
     
     @State private var tempAnswerLength: Double?
     
+    @State private var searchText: String = ""
+    
+    @State private var isUnansweredOnly: Bool = false
+    
+    @State private var isSearchDisplaying: Bool = false
+    
+    @State private var randomQuestion: Question?
+    
+    private var filteredQuestions: [Question] {
+        if isUnansweredOnly {
+            searchText.isEmpty ? questions.filter{ $0.isAnswered == true }: questions.filter{ $0.content.contains(searchText) && $0.isAnswered == true }
+        } else {
+            searchText.isEmpty ? questions : questions.filter{ $0.content.contains(searchText) }
+        }
+    }
+    
     var editButtonText: String {
         isEditing ? "완료" : "삭제"
     }
@@ -39,18 +57,17 @@ struct ContentView: View {
         isEditing ? "checkmark" : "trash"
     }
     
-    var randomQuestion: Question? {
-        let filtered = questions.filter{ $0.isAnswered == false }
-        
-        return filtered.isEmpty ? nil : filtered.randomElement()
-    }
-    
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     VStack(spacing: 10) {
-                        if let randomQuestion {
+                        if isSearchDisplaying {
+                            SearchField(searchText: $searchText, isUnansweredOnly: $isUnansweredOnly)
+                                .focused($focused)
+                        }
+                        
+                        if let randomQuestion, searchText.isEmpty {
                             VStack(spacing: 30) {
                                 Text("답변하지 않은 질문")
                                     .font(.headline)
@@ -80,7 +97,7 @@ struct ContentView: View {
                     }
                     .padding(10)
                     
-                    ForEach(questions) { question in
+                    ForEach(filteredQuestions) { question in
                         QuestionCell(title: question.content, isEditing: $isEditing) {
                             selectedQuestion = question
                             
@@ -94,10 +111,18 @@ struct ContentView: View {
                     }
                 }
                 .padding(.vertical, 10)
+                .background {
+                    Rectangle()
+                        .ignoresSafeArea()
+                        .foregroundStyle(.background)
+                        .onTapGesture {
+                            focused = false
+                        }
+                }
             }
             .navigationTitle("전체 답변 목록")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button {
                         selectedQuestion = nil
                         isEditing.toggle()
@@ -105,6 +130,17 @@ struct ContentView: View {
                         Label(editButtonText, systemImage: editIconName)
                     }
                     .disabled(questions.isEmpty)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if isSearchDisplaying {
+                            searchText = ""
+                        }
+                        
+                        isSearchDisplaying.toggle()
+                    } label: {
+                        Label("검색", systemImage: "magnifyingglass")
+                    }
                 }
             }
             .navigationDestination(isPresented: $isShowingNewQuestion) {
@@ -115,6 +151,9 @@ struct ContentView: View {
                     AnswerRecordingView(question: selectedQuestion, tempAnswerFileName: $tempAnswerFileName, tempAnswerLength: $tempAnswerLength)
                 }
             }
+        }
+        .onAppear {
+            randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
         }
         .onChange(of: $isShowingRecordAnswer.wrappedValue) {
             if !isShowingRecordAnswer {
