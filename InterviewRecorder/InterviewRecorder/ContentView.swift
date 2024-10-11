@@ -43,7 +43,7 @@ struct ContentView: View {
     
     private var filteredQuestions: [Question] {
         if isUnansweredOnly {
-            searchText.isEmpty ? questions.filter{ $0.isAnswered == true }: questions.filter{ $0.content.contains(searchText) && $0.isAnswered == true }
+            searchText.isEmpty ? questions.filter{ $0.isAnswered == false }: questions.filter{ $0.content.contains(searchText) && $0.isAnswered == true }
         } else {
             searchText.isEmpty ? questions : questions.filter{ $0.content.contains(searchText) }
         }
