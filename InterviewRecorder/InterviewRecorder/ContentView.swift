@@ -105,16 +105,60 @@ struct ContentView: View {
                     }
                     .padding(10)
                     
-                    ForEach(filteredQuestions) { question in
-                        QuestionCell(title: question.content, isEditing: $isEditing) {
-                            selectedQuestion = question
-                            
-                            if selectedQuestion != nil {
-                                isShowingRecordAnswer.toggle()
+                    if filteredQuestions.isEmpty && !searchText.isEmpty {
+                        VStack(spacing: 20) {
+                            Label {
+                                Text("검색 결과가 없습니다.")
+                            } icon: {
+                                HStack(alignment: .bottom, spacing: 15){
+                                    Image(systemName: "magnifyingglass")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 100)
+                                    Image(systemName: "questionmark")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 50)
+                                }
                             }
-                        } deleteAction: {
-                            selectedQuestion = question
-                            isShowingDeleteAlert.toggle()
+                            .labelStyle(.iconOnly)
+                            
+                            Text("검색 결과가 없습니다.")
+                        }
+                        .padding(10)
+                    } else if filteredQuestions.isEmpty && isUnansweredOnly {
+                        VStack(spacing: 20) {
+                            Label {
+                                Text("답변하지 않은 질문이 없습니다.")
+                            } icon: {
+                                HStack(alignment: .bottom){
+                                    Image(systemName: "mic.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 100)
+                                    Image(systemName: "checkmark")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 50)
+                                }
+                            }
+                            .labelStyle(.iconOnly)
+                            
+                            Text("답변하지 않은 질문이 없습니다.")
+                        }
+                        .padding(10)
+                    } else {
+                        ForEach(filteredQuestions) { question in
+                            QuestionCell(title: question.content, isEditing: $isEditing) {
+                                selectedQuestion = question
+                                
+                                if selectedQuestion != nil {
+                                    isShowingRecordAnswer.toggle()
+                                }
+                            } deleteAction: {
+                                selectedQuestion = question
+                                isShowingDeleteAlert.toggle()
+                            }
                         }
                     }
                 }
