@@ -1,6 +1,31 @@
 {
   "images" : [
     {
+      "filename" : "InterviewRecorder.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "InterviewRecorder_Dark.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "InterviewRecorder_Dark 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
