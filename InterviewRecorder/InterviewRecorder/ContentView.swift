@@ -208,12 +208,14 @@ struct ContentView: View {
         .onAppear {
             randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
         }
-        .onChange(of: $isShowingNewQuestion.wrappedValue) {
+        .onChange(of: questions) {
             randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
         }
-        .onChange(of: $isShowingRecordAnswer.wrappedValue) {
+        .onChange(of: isShowingRecordAnswer) {
             if !isShowingRecordAnswer {
-                randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
+                if randomQuestion?.isAnswered == true {
+                    randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
+                }
                 
                 switch recordManager.status {
                 case .record:
@@ -242,8 +244,6 @@ struct ContentView: View {
                         isEditing = false
                     }
                     modelContext.delete(selectedQuestion)
-                    
-                    randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
                 }
                 isShowingDeleteAlert = false
                 if questions.isEmpty {
@@ -281,8 +281,6 @@ struct ContentView: View {
                 selectedQuestion = nil
                 tempAnswerFileName = nil
                 tempAnswerLength = nil
-                
-                randomQuestion = questions.filter{ $0.isAnswered == false }.isEmpty ? nil : questions.filter{ $0.isAnswered == false }.randomElement()
                 
                 isShowingSaveAlert = false
             }
