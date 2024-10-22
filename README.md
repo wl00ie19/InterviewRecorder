@@ -34,15 +34,15 @@
 
 | **비어 있는 목록** | **질문 등록 이후 목록(답변하지 않은 질문이 있을 때)** |
 | :---: | :---: |
-| <img src="./Images/EmptyList.png" width="80%"> | <img src="./Images/QuestionList.png?raw=true" width="80%"> | 
+| <img src="./Images/EmptyList.png" width="80%"> | <img src="./Images/QuestionList.png" width="80%"> | 
 | **질문 검색** | **질문 삭제** |
-| <img src="./Images/Search.png?raw=true" width="80%"> | <img src="./Images/DeleteList.png?raw=true" width="80%"> | 
+| <img src="./Images/Search.png" width="80%"> | <img src="./Images/DeleteList.png" width="80%"> | 
 | **새로운 질문 추가** | **답변하지 않은 질문** |
-|<img src="./Images/NewQuestion.png?raw=true" width="80%">|<img src="./Images/UnansweredQuestion.png?raw=true" width="80%">|
+|<img src="./Images/NewQuestion.png" width="80%">|<img src="./Images/UnansweredQuestion.png" width="80%">|
 | **답변 녹음** | **답변한 질문** |
-|<img src="./Images/AnswerRecording.png?raw=true" width="80%">|<img src="./Images/AnsweredQuestion.png?raw=true" width="80%">|
+|<img src="./Images/AnswerRecording.png" width="80%">|<img src="./Images/AnsweredQuestion.png" width="80%">|
 | **답변 재생** | **질문 수정** |
-|<img src="./Images/AnswerPlaying.png?raw=true" width="80%">|<img src="./Images/EditQuestion.png?raw=true" width="80%">|
+|<img src="./Images/AnswerPlaying.png" width="80%">|<img src="./Images/EditQuestion.png" width="80%">|
 <br>
 
 
