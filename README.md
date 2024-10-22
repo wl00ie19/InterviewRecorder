@@ -21,6 +21,19 @@
 - `SwiftData`
 - `Foundation` (File Manager)
 - `AVFoundation`
+### 스크린샷
+
+| **비어 있는 목록** | **질문 등록 이후 목록(답변하지 않은 질문이 있을 때)** |
+| :---: | :---: |
+| <img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/EmptyList.png?raw=true" width="80%"> | <img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/QuestionList.png?raw=true" width="80%"> | 
+| **질문 검색** | **질문 삭제** |
+| <img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/Search.png?raw=true" width="80%"> | <img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/DeleteList.png?raw=true" width="80%"> | 
+| **새로운 질문 추가** | **답변하지 않은 질문** |
+|<img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/NewQuestion.png?raw=true" width="80%">|<img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/UnansweredQuestion.png?raw=true" width="80%">|
+| **답변 녹음** | **답변한 질문** |
+|<img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/AnswerRecording.png?raw=true" width="80%">|<img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/AnsweredQuestion.png?raw=true" width="80%">|
+| **답변 재생** | **질문 수정** |
+|<img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/AnswerPlaying.png?raw=true" width="80%">|<img src="https://github.com/wl00ie19/InterviewRecorder/blob/main/Images/EditQuestion.png?raw=true" width="80%">|
 
 ## Notice
 앱 관련 문의사항이 있으시면 아래 주소로 연락 부탁드립니다. 
