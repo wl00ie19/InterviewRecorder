@@ -20,7 +20,7 @@
 - iOS(iPadOS) 17+
 - Swift 5.10
 - Xcode 15.4 <br>
-  (Xcode 16에서 실행 시 Swift 5 모드로 실행이 필요합니다.)
+  (Xcode 16에서는 Swift 5 모드로 설정 후 실행이 필요합니다.)
 <br>
 
 ### 사용 프레임워크
@@ -47,7 +47,7 @@
 
 
 ## 💻설치 및 실행 방법
-1. 아래 명령어를 이용하여 본 GitHub Repository를 Clone 하거나, 녹색 Code 버튼을 클릭하여 ZIP 압축 파일을 다운로드합니다.
+1. 아래 명령어를 터미널에 입력하여 본 GitHub Repository를 Clone 하거나, 녹색 Code 버튼을 클릭하여 ZIP 압축 파일을 다운로드합니다.
 ```
 git clone https://github.com/wl00ie19/InterviewRecorder.git
 ``` 
